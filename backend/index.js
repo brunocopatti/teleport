@@ -11,6 +11,23 @@ const pool = mysql.createPool({
 
 const app = express();
 
+app.get("/:shortPath", async (req, res, next) => {
+	try {
+		const { shortPath } = req.params;
+		const [results] = await pool.query(
+			"SELECT `destination_url` FROM `redirects` WHERE `short_path` = ?",
+			[shortPath]
+		);
+		if (results.length !== 1) {
+			return res.sendStatus(404);
+		}
+		const destinationUrl = results[0].destination_url;
+		return res.redirect(destinationUrl);
+	} catch (error) {
+		return next(error);
+	}
+});
+
 app.listen(3000, () => {
 	console.log("http://localhost:3000");
 });
