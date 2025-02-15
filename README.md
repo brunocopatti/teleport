@@ -4,7 +4,7 @@ Full-stack URL shortener
 
 ## Features
 
-- [ ] CRUD paths that redirect to websites
+- [x] CRUD paths that redirect to websites
 - [ ] CRUD accounts and authenticate to manage paths
 - [ ] Dashboard with paths generated reports
 	- [ ] Amount of clicks
