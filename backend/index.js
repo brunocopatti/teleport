@@ -94,6 +94,19 @@ app.put("/api/redirects/:redirectId", async (req, res, next) => {
 	}
 });
 
+app.delete("/api/redirects/:redirectId", async (req, res, next) => {
+	try {
+		const { redirectId } = req.params;
+		await pool.execute(
+			"DELETE FROM `redirects` WHERE id = ?",
+			[redirectId]
+		);
+		return res.sendStatus(204);
+	} catch (error) {
+		return next(error);
+	}
+});
+
 app.listen(3000, () => {
 	console.log("http://localhost:3000");
 });
