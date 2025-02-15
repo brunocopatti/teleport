@@ -26,7 +26,12 @@ redirectsRouter.get("/", async (req, res, next) => {
 	try {
 		const MAX_REDIRECTS_COUNT = 10;
 		const [results] = await pool.query(
-			"SELECT * FROM `redirects` LIMIT ?",
+			`SELECT *,
+				(SELECT COUNT(*) FROM redirect_reports
+				WHERE redirect_id = redirects.id)
+				AS clicks
+			FROM redirects
+			LIMIT ?`,
 			[MAX_REDIRECTS_COUNT]
 		);
 		return res.json(results);
