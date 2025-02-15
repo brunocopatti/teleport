@@ -76,6 +76,24 @@ app.get("/api/redirects/:redirectId", async (req, res, next) => {
 	}
 });
 
+app.put("/api/redirects/:redirectId", async (req, res, next) => {
+	try {
+		const { redirectId } = req.params;
+		const { shortPath, destinationUrl } = req.body;
+		await pool.execute(
+			"UPDATE `redirects` SET `short_path` = ?, `destination_url` = ? WHERE id = ?",
+			[shortPath, destinationUrl, redirectId]
+		);
+		const [results] = await pool.query(
+			"SELECT * FROM `redirects` WHERE `short_path` = ?",
+			[shortPath]
+		);
+		return res.json(results[0]);
+	} catch (error) {
+		return next(error);
+	}
+});
+
 app.listen(3000, () => {
 	console.log("http://localhost:3000");
 });
