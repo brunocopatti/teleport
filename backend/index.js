@@ -11,6 +11,8 @@ const pool = mysql.createPool({
 
 const app = express();
 
+app.use(express.json());
+
 app.get("/:shortPath", async (req, res, next) => {
 	try {
 		const { shortPath } = req.params;
@@ -23,6 +25,23 @@ app.get("/:shortPath", async (req, res, next) => {
 		}
 		const destinationUrl = results[0].destination_url;
 		return res.redirect(destinationUrl);
+	} catch (error) {
+		return next(error);
+	}
+});
+
+app.post("/api/redirects", async (req, res, next) => {
+	try {
+		const { shortPath, destinationUrl } = req.body;
+		await pool.execute(
+			"INSERT INTO `redirects`(`short_path`, `destination_url`) VALUES (?, ?)",
+			[shortPath, destinationUrl]
+		);
+		const [results] = await pool.query(
+			"SELECT * FROM `redirects` WHERE `short_path` = ?",
+			[shortPath]
+		);
+		return res.status(201).json(results[0]);
 	} catch (error) {
 		return next(error);
 	}
