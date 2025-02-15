@@ -43,14 +43,21 @@ redirectsRouter.get("/", async (req, res, next) => {
 redirectsRouter.get("/:redirectId", async (req, res, next) => {
 	try {
 		const { redirectId } = req.params;
-		const [results] = await pool.query(
+		const [redirectResults] = await pool.query(
 			"SELECT * FROM `redirects` WHERE id = ?",
 			[redirectId]
 		);
-		if (results.length !== 1) {
+		if (redirectResults.length !== 1) {
 			return res.sendStatus(404);
 		}
-		return res.json(results[0]);
+		const [redirectReportResults] = await pool.query(
+			"SELECT * FROM `redirect_reports` WHERE `redirect_id` = ?",
+			[redirectId]
+		);
+		return res.json({
+			"redirect": redirectResults[0],
+			"reports": redirectReportResults
+		});
 	} catch (error) {
 		return next(error);
 	}
