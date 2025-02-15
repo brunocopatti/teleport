@@ -47,6 +47,19 @@ app.post("/api/redirects", async (req, res, next) => {
 	}
 });
 
+app.get("/api/redirects", async (req, res, next) => {
+	try {
+		const MAX_REDIRECTS_COUNT = 10;
+		const [results] = await pool.query(
+			"SELECT * FROM `redirects` LIMIT ?",
+			[MAX_REDIRECTS_COUNT]
+		);
+		return res.json(results);
+	} catch (error) {
+		return next(error);
+	}
+});
+
 app.listen(3000, () => {
 	console.log("http://localhost:3000");
 });
