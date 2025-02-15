@@ -1,17 +1,8 @@
-require("dotenv").config();
-
 const express = require("express");
-const mysql = require("mysql2/promise");
-
-const pool = mysql.createPool({
-	user: process.env.DB_USER,
-	password: process.env.DB_PASSWORD,
-	database: process.env.DB_NAME
-});
+const pool = require("./db");
+const redirectsRouter = require("./routers/redirects");
 
 const app = express();
-
-app.use(express.json());
 
 app.get("/:shortPath", async (req, res, next) => {
 	try {
@@ -35,82 +26,7 @@ app.get("/:shortPath", async (req, res, next) => {
 	}
 });
 
-app.post("/api/redirects", async (req, res, next) => {
-	try {
-		const { shortPath, destinationUrl } = req.body;
-		await pool.execute(
-			"INSERT INTO `redirects`(`short_path`, `destination_url`) VALUES (?, ?)",
-			[shortPath, destinationUrl]
-		);
-		const [results] = await pool.query(
-			"SELECT * FROM `redirects` WHERE `short_path` = ?",
-			[shortPath]
-		);
-		return res.status(201).json(results[0]);
-	} catch (error) {
-		return next(error);
-	}
-});
-
-app.get("/api/redirects", async (req, res, next) => {
-	try {
-		const MAX_REDIRECTS_COUNT = 10;
-		const [results] = await pool.query(
-			"SELECT * FROM `redirects` LIMIT ?",
-			[MAX_REDIRECTS_COUNT]
-		);
-		return res.json(results);
-	} catch (error) {
-		return next(error);
-	}
-});
-
-app.get("/api/redirects/:redirectId", async (req, res, next) => {
-	try {
-		const { redirectId } = req.params;
-		const [results] = await pool.query(
-			"SELECT * FROM `redirects` WHERE id = ?",
-			[redirectId]
-		);
-		if (results.length !== 1) {
-			return res.sendStatus(404);
-		}
-		return res.json(results[0]);
-	} catch (error) {
-		return next(error);
-	}
-});
-
-app.put("/api/redirects/:redirectId", async (req, res, next) => {
-	try {
-		const { redirectId } = req.params;
-		const { shortPath, destinationUrl } = req.body;
-		await pool.execute(
-			"UPDATE `redirects` SET `short_path` = ?, `destination_url` = ? WHERE id = ?",
-			[shortPath, destinationUrl, redirectId]
-		);
-		const [results] = await pool.query(
-			"SELECT * FROM `redirects` WHERE `short_path` = ?",
-			[shortPath]
-		);
-		return res.json(results[0]);
-	} catch (error) {
-		return next(error);
-	}
-});
-
-app.delete("/api/redirects/:redirectId", async (req, res, next) => {
-	try {
-		const { redirectId } = req.params;
-		await pool.execute(
-			"DELETE FROM `redirects` WHERE id = ?",
-			[redirectId]
-		);
-		return res.sendStatus(204);
-	} catch (error) {
-		return next(error);
-	}
-});
+app.use("/api/redirects", redirectsRouter);
 
 app.listen(3000, () => {
 	console.log("http://localhost:3000");
