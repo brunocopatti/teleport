@@ -1,6 +1,12 @@
 # Back-end
 
-## Required environment variables
+## Installation
+
+### Database
+
+Ensure you have a MySQL database and create the tables at the `init.sql` file.
+
+### Required environment variables
 
 Add the following variables to your `.env` file:
 
