@@ -12,7 +12,7 @@ const userSchema = z.object({
 		.max(255, "Password must have less than 255 characters")
 });
 
-function LoginForm({ setToken }) {
+function LoginForm({ setCredentials }) {
 	const {
     register,
     handleSubmit,
@@ -24,10 +24,10 @@ function LoginForm({ setToken }) {
 
 	const onSubmit = async (data) => {
 		try {
-      const { token } = await authenticate(data);
+      const credentials = await authenticate(data);
       setValue("username", "");
       setValue("password", "");
-      setToken(token);
+      setCredentials(credentials);
     } catch (error) {
       console.error(error);
     }

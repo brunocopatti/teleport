@@ -3,14 +3,14 @@ import CreateUserForm from "./components/CreateUserForm"
 import LoginForm from "./components/LoginForm"
 
 function App() {
-	const [token, setToken] = useState(null);
-	if (token) {
-		return <p>Authenticated with token {token}</p>
+	const [credentials, setCredentials] = useState(null);
+	if (credentials) {
+		return <p>Authenticated as {credentials.user.username}</p>
 	}
 	return (
 		<>
 			<CreateUserForm/>
-			<LoginForm setToken={setToken} />
+			<LoginForm setCredentials={setCredentials} />
 		</>
 	)
 }
