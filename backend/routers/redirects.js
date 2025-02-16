@@ -37,16 +37,14 @@ redirectsRouter.get(
 	loginRequired,
 	async (req, res, next) => {
 		try {
-			const MAX_REDIRECTS_COUNT = 10;
 			const [results] = await pool.query(
 				`SELECT *,
 					(SELECT COUNT(*) FROM redirect_reports
 					WHERE redirect_id = redirects.id)
 					AS clicks
 				FROM redirects
-				WHERE user_id = ?
-				LIMIT ?`,
-				[req.user.id, MAX_REDIRECTS_COUNT]
+				WHERE user_id = ?`,
+				[req.user.id]
 			);
 			return res.json(results);
 		} catch (error) {
