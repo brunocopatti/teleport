@@ -2,6 +2,7 @@ const express = require("express");
 const { param } = require("express-validator");
 const pool = require("./db");
 const redirectsRouter = require("./routers/redirects");
+const usersRouter = require("./routers/users");
 const { validateInput } = require("./middleware/validator");
 
 const app = express();
@@ -34,6 +35,7 @@ app.get(
 );
 
 app.use("/api/redirects", redirectsRouter);
+app.use("/api/users", usersRouter);
 
 app.listen(3000, () => {
 	console.log("http://localhost:3000");
