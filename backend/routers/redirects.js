@@ -12,7 +12,7 @@ redirectsRouter.post(
 	"/",
 	loginRequired,
 	body("shortPath").isLength({ min: 1, max: 255 }),
-	body("destinationUrl").isURL(),
+	body("destinationUrl").isURL({ require_protocol: true }),
 	validateInput,
 	async (req, res, next) => {
 		try {
@@ -89,7 +89,7 @@ redirectsRouter.put(
 	loginRequired,
 	param("redirectId").isInt(),
 	body("shortPath").isLength({ min: 1, max: 255 }),
-	body("destinationUrl").isURL(),
+	body("destinationUrl").isURL({ require_protocol: true }),
 	validateInput,
 	async (req, res, next) => {
 		try {
