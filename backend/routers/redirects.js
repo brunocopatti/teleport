@@ -2,6 +2,7 @@ const express = require("express");
 const { body, param, matchedData } = require("express-validator");
 const pool = require("../db");
 const { validateInput } = require("../middleware/validator");
+const loginRequired = require("../middleware/loginRequired");
 
 const redirectsRouter = express.Router();
 
@@ -9,6 +10,7 @@ redirectsRouter.use(express.json());
 
 redirectsRouter.post(
 	"/",
+	loginRequired,
 	body("shortPath").isLength({ min: 1, max: 255 }),
 	body("destinationUrl").isURL(),
 	validateInput,
@@ -16,8 +18,8 @@ redirectsRouter.post(
 		try {
 			const { shortPath, destinationUrl } = matchedData(req);
 			await pool.execute(
-				"INSERT INTO `redirects`(`short_path`, `destination_url`) VALUES (?, ?)",
-				[shortPath, destinationUrl]
+				"INSERT INTO `redirects`(`short_path`, `destination_url`, `user_id`) VALUES (?, ?, ?)",
+				[shortPath, destinationUrl, req.user.id]
 			);
 			const [results] = await pool.query(
 				"SELECT * FROM `redirects` WHERE `short_path` = ?",
@@ -30,34 +32,40 @@ redirectsRouter.post(
 	}
 );
 
-redirectsRouter.get("/", async (req, res, next) => {
-	try {
-		const MAX_REDIRECTS_COUNT = 10;
-		const [results] = await pool.query(
-			`SELECT *,
-				(SELECT COUNT(*) FROM redirect_reports
-				WHERE redirect_id = redirects.id)
-				AS clicks
-			FROM redirects
-			LIMIT ?`,
-			[MAX_REDIRECTS_COUNT]
-		);
-		return res.json(results);
-	} catch (error) {
-		return next(error);
+redirectsRouter.get(
+	"/",
+	loginRequired,
+	async (req, res, next) => {
+		try {
+			const MAX_REDIRECTS_COUNT = 10;
+			const [results] = await pool.query(
+				`SELECT *,
+					(SELECT COUNT(*) FROM redirect_reports
+					WHERE redirect_id = redirects.id)
+					AS clicks
+				FROM redirects
+				WHERE user_id = ?
+				LIMIT ?`,
+				[req.user.id, MAX_REDIRECTS_COUNT]
+			);
+			return res.json(results);
+		} catch (error) {
+			return next(error);
+		}
 	}
-});
+);
 
 redirectsRouter.get(
 	"/:redirectId",
+	loginRequired,
 	param("redirectId").isInt(),
 	validateInput,
 	async (req, res, next) => {
 		try {
 			const { redirectId } = matchedData(req);
 			const [redirectResults] = await pool.query(
-				"SELECT * FROM `redirects` WHERE id = ?",
-				[redirectId]
+				"SELECT * FROM `redirects` WHERE id = ? AND `user_id` = ?",
+				[redirectId, req.user.id]
 			);
 			if (redirectResults.length !== 1) {
 				return res.sendStatus(404);
@@ -78,6 +86,7 @@ redirectsRouter.get(
 
 redirectsRouter.put(
 	"/:redirectId",
+	loginRequired,
 	param("redirectId").isInt(),
 	body("shortPath").isLength({ min: 1, max: 255 }),
 	body("destinationUrl").isURL(),
@@ -86,10 +95,17 @@ redirectsRouter.put(
 		try {
 			const { redirectId } = matchedData(req);
 			const { shortPath, destinationUrl } = req.body;
-			await pool.execute(
-				"UPDATE `redirects` SET `short_path` = ?, `destination_url` = ? WHERE id = ?",
-				[shortPath, destinationUrl, redirectId]
+			const [updateResults] = await pool.execute(
+				`UPDATE redirects
+				SET short_path = ?,
+				destination_url = ?
+				WHERE id = ?
+				AND user_id = ?`,
+				[shortPath, destinationUrl, redirectId, req.user.id]
 			);
+			if (updateResults.affectedRows !== 1) {
+				return res.sendStatus(404);
+			}
 			const [results] = await pool.query(
 				"SELECT * FROM `redirects` WHERE `short_path` = ?",
 				[shortPath]
@@ -103,15 +119,19 @@ redirectsRouter.put(
 
 redirectsRouter.delete(
 	"/:redirectId",
+	loginRequired,
 	param("redirectId").isInt(),
 	validateInput,
 	async (req, res, next) => {
 		try {
 			const { redirectId } = matchedData(req);
-			await pool.execute(
-				"DELETE FROM `redirects` WHERE id = ?",
-				[redirectId]
+			const [results] = await pool.execute(
+				"DELETE FROM `redirects` WHERE id = ? AND `user_id` = ?",
+				[redirectId, req.user.id]
 			);
+			if (results.affectedRows !== 1) {
+				return res.sendStatus(404);
+			}
 			return res.sendStatus(204);
 		} catch (error) {
 			return next(error);
