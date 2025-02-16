@@ -1,8 +1,8 @@
 const express = require("express");
+const { param } = require("express-validator");
 const pool = require("./db");
 const redirectsRouter = require("./routers/redirects");
 const { validateInput } = require("./middleware/validator");
-const { param } = require("express-validator");
 
 const app = express();
 
