@@ -32,12 +32,14 @@ authRouter.post(
 			}
 			const user = results[0];
 			if (await argon2.verify(user.password_hash, password)) {
-				// Only pass necessary info
+				// prevent leak
+				delete user.password_hash;
+				// Only pass unchangeable info to token
 				const token = jwt.sign({
 					"id": user.id,
 					"created_at": user.created_at
 				}, process.env.SECRET);
-				return res.json({ token });
+				return res.json({ token, user });
 			}
 			return res.status(400).json(errorJSON);
 		} catch (error) {
