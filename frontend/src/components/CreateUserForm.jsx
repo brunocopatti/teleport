@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { createUser } from "../api/users";
 
 const userSchema = z.object({
 	username: z.string()
@@ -16,12 +17,20 @@ function CreateUserForm() {
     register,
     handleSubmit,
     formState: { errors },
+    setValue
   } = useForm({
     resolver: zodResolver(userSchema),
   });
 
-	const onSubmit = (data) => {
-		console.log("User created:", data)
+	const onSubmit = async (data) => {
+    try {
+      const user = await createUser(data);
+      setValue("username", "");
+      setValue("password", "");
+      console.log("User created:", user);
+    } catch (error) {
+      console.error(error);
+    }
 	};
 
 	return (
