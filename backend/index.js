@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const { param } = require("express-validator");
 const { IPinfoWrapper } = require("node-ipinfo");
+const cors = require("cors");
 const pool = require("./db");
 const redirectsRouter = require("./routers/redirects");
 const usersRouter = require("./routers/users");
@@ -12,6 +13,8 @@ const { validateInput } = require("./middleware/validator");
 const app = express();
 
 const ipinfoWrapper = new IPinfoWrapper(process.env.IPINFO_TOKEN);
+
+app.use(cors());
 
 app.get(
 	"/:shortPath",
