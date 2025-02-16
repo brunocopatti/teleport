@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { authenticate } from "../api/auth";
 
 const userSchema = z.object({
 	username: z.string()
@@ -11,17 +12,25 @@ const userSchema = z.object({
 		.max(255, "Password must have less than 255 characters")
 });
 
-function LoginForm() {
+function LoginForm({ setToken }) {
 	const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue
   } = useForm({
     resolver: zodResolver(userSchema),
   });
 
-	const onSubmit = (data) => {
-		console.log("Sent credentials:", data)
+	const onSubmit = async (data) => {
+		try {
+      const { token } = await authenticate(data);
+      setValue("username", "");
+      setValue("password", "");
+      setToken(token);
+    } catch (error) {
+      console.error(error);
+    }
 	};
 
 	return (
