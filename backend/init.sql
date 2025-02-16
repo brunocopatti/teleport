@@ -19,6 +19,6 @@ CREATE TABLE `redirects` (
 CREATE TABLE `redirect_reports` (
 	`id` INT PRIMARY KEY AUTO_INCREMENT,
 	`redirect_id` INT NOT NULL,
-	`ip_address` VARCHAR(255),
+	`location` VARCHAR(255),
 	`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

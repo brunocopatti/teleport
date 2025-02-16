@@ -1,5 +1,8 @@
+require("dotenv").config();
+
 const express = require("express");
 const { param } = require("express-validator");
+const { IPinfoWrapper } = require("node-ipinfo");
 const pool = require("./db");
 const redirectsRouter = require("./routers/redirects");
 const usersRouter = require("./routers/users");
@@ -7,6 +10,8 @@ const authRouter = require("./routers/auth");
 const { validateInput } = require("./middleware/validator");
 
 const app = express();
+
+const ipinfoWrapper = new IPinfoWrapper(process.env.IPINFO_TOKEN);
 
 app.get(
 	"/:shortPath",
@@ -24,9 +29,11 @@ app.get(
 			}
 			const redirectId = results[0].id;
 			const destinationUrl = results[0].destination_url;
+			const ipinfo = await ipinfoWrapper.lookupIp(req.ip);
+			const location = ipinfo.loc || null;
 			await pool.execute(
-				"INSERT INTO `redirect_reports`(`redirect_id`, `ip_address`) VALUES (?, ?)",
-				[redirectId, req.ip]
+				"INSERT INTO `redirect_reports`(`redirect_id`, `location`) VALUES (?, ?)",
+				[redirectId, location]
 			);
 			return res.redirect(destinationUrl);
 		} catch (error) {
