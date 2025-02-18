@@ -11,7 +11,7 @@ redirectsRouter.use(express.json());
 redirectsRouter.post(
 	"/",
 	loginRequired,
-	body("shortPath").isLength({ min: 1, max: 255 }),
+	body("shortPath").isLength({ min: 1, max: 20 }),
 	body("destinationUrl").isURL({ require_protocol: true }),
 	validateInput,
 	async (req, res, next) => {
@@ -86,7 +86,7 @@ redirectsRouter.put(
 	"/:redirectId",
 	loginRequired,
 	param("redirectId").isInt(),
-	body("shortPath").isLength({ min: 1, max: 255 }),
+	body("shortPath").isLength({ min: 1, max: 20 }),
 	body("destinationUrl").isURL({ require_protocol: true }),
 	validateInput,
 	async (req, res, next) => {

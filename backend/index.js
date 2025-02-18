@@ -18,7 +18,7 @@ app.use(cors());
 
 app.get(
 	"/:shortPath",
-	param("shortPath").isLength({ min: 1, max: 255 }),
+	param("shortPath").isLength({ min: 1, max: 20 }),
 	validateInput,
 	async (req, res, next) => {
 		try {
