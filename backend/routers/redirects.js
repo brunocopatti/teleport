@@ -68,7 +68,12 @@ redirectsRouter.get(
 		try {
 			const { redirectId } = matchedData(req);
 			const [redirectResults] = await pool.query(
-				"SELECT * FROM `redirects` WHERE id = ? AND `user_id` = ?",
+				`SELECT
+					*
+					,(SELECT COUNT(*)
+					FROM redirect_reports
+					WHERE redirect_id = redirects.id) AS clicks
+				FROM redirects WHERE id = ? AND user_id = ?`,
 				[redirectId, req.user.id]
 			);
 			if (redirectResults.length !== 1) {
