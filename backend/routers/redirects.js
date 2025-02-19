@@ -22,7 +22,13 @@ redirectsRouter.post(
 				[shortPath, destinationUrl, req.user.id]
 			);
 			const [results] = await pool.query(
-				"SELECT * FROM `redirects` WHERE `short_path` = ?",
+				`SELECT
+					*
+					,(SELECT COUNT(*)
+					FROM redirect_reports
+					WHERE redirect_id = redirects.id) AS clicks
+				FROM redirects
+				WHERE short_path = ?`,
 				[shortPath]
 			);
 			return res.status(201).json(results[0]);
