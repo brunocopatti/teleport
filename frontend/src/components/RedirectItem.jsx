@@ -1,6 +1,6 @@
 import { deleteRedirect } from "../api/redirects";
 
-function Redirect({ redirect, setRedirects, token }) {
+function RedirectItem({ redirect, setRedirects, token }) {
 	const onDelete = async () => {
 		try {
 			await deleteRedirect({ id: redirect.id }, { token });
@@ -20,4 +20,4 @@ function Redirect({ redirect, setRedirects, token }) {
 	)
 }
 
-export default Redirect;
+export default RedirectItem;

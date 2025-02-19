@@ -1,4 +1,4 @@
-import Redirect from "./Redirect";
+import RedirectItem from "./RedirectItem";
 
 function RedirectList({ redirects, setRedirects, credentials }) {
 	return (
@@ -6,7 +6,7 @@ function RedirectList({ redirects, setRedirects, credentials }) {
 			<h3>Redirects</h3>
 			<ul>
 				{redirects.map((redirect) => (
-					<Redirect
+					<RedirectItem
 						key={redirect.id}
 						redirect={redirect}
 						setRedirects={setRedirects}
