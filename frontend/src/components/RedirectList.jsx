@@ -1,6 +1,6 @@
 import RedirectItem from "./RedirectItem";
 
-function RedirectList({ redirects, setRedirects, credentials }) {
+function RedirectList({ redirects, setRedirects, setDetailedRedirect, credentials }) {
 	return (
 		<>
 			<h3>Redirects</h3>
@@ -10,6 +10,7 @@ function RedirectList({ redirects, setRedirects, credentials }) {
 						key={redirect.id}
 						redirect={redirect}
 						setRedirects={setRedirects}
+						setDetailedRedirect={setDetailedRedirect}
 						token={credentials.token}
 					/>
 				))}

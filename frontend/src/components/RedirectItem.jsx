@@ -1,6 +1,6 @@
-import { deleteRedirect } from "../api/redirects";
+import { deleteRedirect, getRedirectById } from "../api/redirects";
 
-function RedirectItem({ redirect, setRedirects, token }) {
+function RedirectItem({ redirect, setRedirects, setDetailedRedirect, token }) {
 	const onDelete = async () => {
 		try {
 			await deleteRedirect({ id: redirect.id }, { token });
@@ -11,10 +11,21 @@ function RedirectItem({ redirect, setRedirects, token }) {
 			console.error(error);
 		}
 	}
+
+	const onShow = async () => {
+		try {
+			const detailedRedirect = await getRedirectById({ id: redirect.id }, { token });
+			setDetailedRedirect(detailedRedirect);
+		} catch (error) {
+			console.error(error);
+		}
+	}
 	
 	return (
 		<li>
-			{redirect.short_path} - <b>{redirect.clicks}</b> clicks
+			<button onClick={onShow}>
+				{redirect.short_path}
+			</button> - <b>{redirect.clicks}</b> clicks
 			<button onClick={onDelete}>Delete</button>
 		</li>
 	)
