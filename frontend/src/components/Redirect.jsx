@@ -1,13 +1,13 @@
 import { deleteRedirect } from "../api/redirects";
 
-function Redirect({ redirect, reports, setRedirects, setDetailedRedirect, token }) {
+function Redirect({ redirect, reports, setRedirects, setActiveRedirect, token }) {
 	const onDelete = async () => {
 		try {
 			await deleteRedirect({ id: redirect.id }, { token });
 			setRedirects((redirects) => redirects.filter((r) => (
 				r.id !== redirect.id
 			)));
-			setDetailedRedirect(null);
+			setActiveRedirect(null);
 		} catch (error) {
 			console.error(error);
 		}

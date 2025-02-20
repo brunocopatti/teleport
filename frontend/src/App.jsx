@@ -9,7 +9,7 @@ import { getRedirects } from "./api/redirects";
 function App() {
 	const [credentials, setCredentials] = useState(null);
 	const [redirects, setRedirects] = useState([]);
-	const [detailedRedirect, setDetailedRedirect] = useState(null);
+	const [activeRedirect, setActiveRedirect] = useState(null);
 
 	const onLogout = () => {
 		setCredentials(null);
@@ -32,7 +32,7 @@ function App() {
 			<>
 				<p>Authenticated as {credentials.user.username}</p>
 				<button onClick={onLogout}>Logout</button>
-				{!detailedRedirect ? (
+				{!activeRedirect ? (
 					<>
 						<CreateRedirectForm
 							setRedirects={setRedirects}
@@ -41,7 +41,7 @@ function App() {
 						<RedirectList
 							redirects={redirects}
 							setRedirects={setRedirects}
-							setDetailedRedirect={setDetailedRedirect}
+							setActiveRedirect={setActiveRedirect}
 							credentials={credentials}
 						/>
 					</>
@@ -49,16 +49,16 @@ function App() {
 					<>
 						<button 
 							onClick={() => {
-								setDetailedRedirect(null);
+								setActiveRedirect(null);
 							}}
 						>
 							Return to redirects
 						</button>
 						<Redirect
-							redirect={detailedRedirect.redirect}
-							reports={detailedRedirect.reports}
+							redirect={activeRedirect.redirect}
+							reports={activeRedirect.reports}
 							setRedirects={setRedirects}
-							setDetailedRedirect={setDetailedRedirect}
+							setActiveRedirect={setActiveRedirect}
 							token={credentials.token}
 						/>
 					</>

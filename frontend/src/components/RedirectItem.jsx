@@ -1,6 +1,6 @@
 import { deleteRedirect, getRedirectById } from "../api/redirects";
 
-function RedirectItem({ redirect, setRedirects, setDetailedRedirect, token }) {
+function RedirectItem({ redirect, setRedirects, setActiveRedirect, token }) {
 	const onDelete = async () => {
 		try {
 			await deleteRedirect({ id: redirect.id }, { token });
@@ -14,8 +14,8 @@ function RedirectItem({ redirect, setRedirects, setDetailedRedirect, token }) {
 
 	const onShow = async () => {
 		try {
-			const detailedRedirect = await getRedirectById({ id: redirect.id }, { token });
-			setDetailedRedirect(detailedRedirect);
+			const activeRedirect = await getRedirectById({ id: redirect.id }, { token });
+			setActiveRedirect(activeRedirect);
 		} catch (error) {
 			console.error(error);
 		}
