@@ -39,3 +39,21 @@ export const deleteRedirect = async({ id }, { token }) => {
 		}
 	});
 };
+
+export const updateRedirect = async(
+	{ id }, { shortPath, destinationUrl }, { token }
+) => {
+	const response = await axios.put(
+		`${baseUrl}/${id}`,
+		{
+			shortPath,
+			destinationUrl
+		},
+		{
+			headers: {
+				Authorization: `Bearer ${token}`
+			}
+		}
+	);
+	return response.data;
+};
