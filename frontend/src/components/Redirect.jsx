@@ -1,10 +1,24 @@
-function Redirect({ redirect, reports }) {
+import { deleteRedirect } from "../api/redirects";
+
+function Redirect({ redirect, reports, setRedirects, setDetailedRedirect, token }) {
+	const onDelete = async () => {
+		try {
+			await deleteRedirect({ id: redirect.id }, { token });
+			setRedirects((redirects) => redirects.filter((r) => (
+				r.id !== redirect.id
+			)));
+			setDetailedRedirect(null);
+		} catch (error) {
+			console.error(error);
+		}
+	}
+	
 	return (
 		<>
 			<h2>{redirect.short_path}</h2>
 			<p>Access count: {redirect.clicks}</p>
 			<p>Destination url: <a href={redirect.destination_url}>{redirect.destination_url}</a></p>
-			<button>Delete</button>
+			<button onClick={onDelete}>Delete</button>
 			<button>Edit</button>
 			<h3>Geographical location from accesses</h3>
 			<p>Map placeholder</p>

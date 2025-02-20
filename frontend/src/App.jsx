@@ -57,6 +57,9 @@ function App() {
 						<Redirect
 							redirect={detailedRedirect.redirect}
 							reports={detailedRedirect.reports}
+							setRedirects={setRedirects}
+							setDetailedRedirect={setDetailedRedirect}
+							token={credentials.token}
 						/>
 					</>
 				)}
