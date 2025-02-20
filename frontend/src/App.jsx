@@ -32,20 +32,7 @@ function App() {
 			<>
 				<p>Authenticated as {credentials.user.username}</p>
 				<button onClick={onLogout}>Logout</button>
-				{!activeRedirect ? (
-					<>
-						<CreateRedirectForm
-							setRedirects={setRedirects}
-							credentials={credentials}
-						/>
-						<RedirectList
-							redirects={redirects}
-							setRedirects={setRedirects}
-							setActiveRedirect={setActiveRedirect}
-							credentials={credentials}
-						/>
-					</>
-				) : (
+				{activeRedirect ? (
 					<>
 						<button 
 							onClick={() => {
@@ -60,6 +47,19 @@ function App() {
 							setRedirects={setRedirects}
 							setActiveRedirect={setActiveRedirect}
 							token={credentials.token}
+						/>
+					</>
+				) : (
+					<>
+						<CreateRedirectForm
+							setRedirects={setRedirects}
+							credentials={credentials}
+						/>
+						<RedirectList
+							redirects={redirects}
+							setRedirects={setRedirects}
+							setActiveRedirect={setActiveRedirect}
+							credentials={credentials}
 						/>
 					</>
 				)}
