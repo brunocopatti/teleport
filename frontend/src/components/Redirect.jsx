@@ -2,8 +2,15 @@ import { useState } from "react";
 import { deleteRedirect } from "../api/redirects";
 import UpdateRedirectForm from "./UpdateRedirectForm";
 
+const getBaseUrl = () => {
+	if (import.meta.env.VITE_API_URL) {
+		return `${import.meta.env.VITE_API_URL}/`
+	}
+	return window.location.href;
+}
+
 function Redirect({ redirect, reports, setRedirects, setActiveRedirect, token }) {
-	const shortUrl = `${window.location.href}${redirect.short_path}`;
+	const shortUrl = `${getBaseUrl()}${redirect.short_path}`;
 
 	const [isEditing, setIsEditing] = useState(false);
 
