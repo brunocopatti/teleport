@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { deleteRedirect } from "../api/redirects";
-import UpdateRedirectForm from "./UpdateRedirectForm";
+import RedirectUpdateForm from "./RedirectUpdateForm";
 
 const getBaseUrl = () => {
 	if (import.meta.env.VITE_API_URL) {
@@ -49,7 +49,7 @@ function Redirect({ redirect, reports, setRedirects, setActiveRedirect, token })
 			{isEditing && (
 				<>
 					<h3>Edit {redirect.short_path}</h3>
-					<UpdateRedirectForm
+					<RedirectUpdateForm
 						redirect={redirect}
 						setRedirects={setRedirects}
 						setActiveRedirect={setActiveRedirect}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import CreateUserForm from "./components/CreateUserForm";
+import UserCreateForm from "./components/UserCreateForm";
 import LoginForm from "./components/LoginForm";
-import CreateRedirectForm from "./components/CreateRedirectForm";
+import RedirectCreateForm from "./components/RedirectCreateForm";
 import RedirectList from "./components/RedirectList";
 import Redirect from "./components/Redirect";
 import { getRedirects } from "./api/redirects";
@@ -51,7 +51,7 @@ function App() {
 					</>
 				) : (
 					<>
-						<CreateRedirectForm
+						<RedirectCreateForm
 							setRedirects={setRedirects}
 							credentials={credentials}
 						/>
@@ -68,7 +68,7 @@ function App() {
 	}
 	return (
 		<>
-			<CreateUserForm/>
+			<UserCreateForm/>
 			<LoginForm setCredentials={setCredentials} />
 		</>
 	)
