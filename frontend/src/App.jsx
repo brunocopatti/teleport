@@ -13,6 +13,7 @@ function App() {
 
 	const onLogout = () => {
 		setCredentials(null);
+		setActiveRedirect(null);
 	}
 
 	useEffect(() => {
