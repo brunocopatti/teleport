@@ -3,6 +3,8 @@ import { deleteRedirect } from "../api/redirects";
 import UpdateRedirectForm from "./UpdateRedirectForm";
 
 function Redirect({ redirect, reports, setRedirects, setActiveRedirect, token }) {
+	const shortUrl = `${window.location.href}${redirect.short_path}`;
+
 	const [isEditing, setIsEditing] = useState(false);
 
 	const onDelete = async () => {
@@ -16,11 +18,22 @@ function Redirect({ redirect, reports, setRedirects, setActiveRedirect, token })
 			console.error(error);
 		}
 	}
+
+	const copyShortUrl = () => {
+		navigator.clipboard.writeText(shortUrl);
+		alert(`copied ${shortUrl} to clipboard`);
+	}
 	
 	return (
 		<>
 			<h2>{redirect.short_path}</h2>
 			<p>Access count: {redirect.clicks}</p>
+			<div>
+				<p>
+					Short URL: <a href={shortUrl}>{shortUrl}</a>
+				</p>
+				<button onClick={copyShortUrl}>Copy</button>
+			</div>
 			<p>Destination url: <a href={redirect.destination_url}>{redirect.destination_url}</a></p>
 			<button onClick={onDelete}>Delete</button>
 			<button onClick={() => setIsEditing(!isEditing)}>
