@@ -15,5 +15,5 @@ Full-stack URL shortener
 		- [x] Geographical location
 		- [x] Access time
 	- [ ] Create dashboard
-		- [ ] Choropleth map
+		- [x] Map with marker for every click location
 		- [ ] Time plot graph
