@@ -1,6 +1,8 @@
+import { MapContainer, TileLayer } from "react-leaflet";
 import { useState } from "react";
 import { deleteRedirect } from "../api/redirects";
 import RedirectUpdateForm from "./RedirectUpdateForm";
+import "leaflet/dist/leaflet.css";
 
 const getBaseUrl = () => {
 	if (import.meta.env.VITE_API_URL) {
@@ -58,7 +60,12 @@ function Redirect({ redirect, reports, setRedirects, setActiveRedirect, token })
 				</>
 			)}
 			<h3>Geographical location from accesses</h3>
-			<p>Map placeholder</p>
+			<MapContainer style={{ height: "400px" }} center={[0, 0]} zoom={1} scrollWheelZoom={true}>
+				<TileLayer
+					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+				/>
+			</MapContainer>
 			<h3>Accesses over time</h3>
 			<p>Graph placeholder</p>
 		</>

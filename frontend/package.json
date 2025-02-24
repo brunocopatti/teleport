@@ -12,9 +12,11 @@
   "dependencies": {
     "@hookform/resolvers": "^4.1.0",
     "axios": "^1.7.9",
+    "leaflet": "^1.9.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
+    "react-leaflet": "^5.0.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
