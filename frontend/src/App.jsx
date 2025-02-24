@@ -54,13 +54,13 @@ function App() {
 					<>
 						<RedirectCreateForm
 							setRedirects={setRedirects}
-							credentials={credentials}
+							token={credentials.token}
 						/>
 						<RedirectList
 							redirects={redirects}
 							setRedirects={setRedirects}
 							setActiveRedirect={setActiveRedirect}
-							credentials={credentials}
+							token={credentials.token}
 						/>
 					</>
 				)}

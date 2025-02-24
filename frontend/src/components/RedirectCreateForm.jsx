@@ -14,7 +14,7 @@ const redirectSchema = z.object({
     .max(255, "Must have less than 255 characters")
 });
 
-function CreateRedirectForm({ credentials, setRedirects }) {
+function CreateRedirectForm({ token, setRedirects }) {
 	const {
     register,
     handleSubmit,
@@ -26,7 +26,7 @@ function CreateRedirectForm({ credentials, setRedirects }) {
 
 	const onSubmit = async (data) => {
     try {
-      const redirect = await createRedirect(data, credentials);
+      const redirect = await createRedirect(data, { token });
       setValue("shortPath", "");
       setValue("destinationUrl", "");
       setRedirects((redirects) => (

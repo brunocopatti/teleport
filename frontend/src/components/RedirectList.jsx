@@ -1,10 +1,10 @@
 import { getRedirects } from "../api/redirects";
 import RedirectItem from "./RedirectItem";
 
-function RedirectList({ redirects, setRedirects, setActiveRedirect, credentials }) {
+function RedirectList({ redirects, setRedirects, setActiveRedirect, token }) {
 	const onRefresh = async () => {
 		try {
-			setRedirects(await getRedirects({ token: credentials.token }));
+			setRedirects(await getRedirects({ token }));
 		} catch (error) {
 			console.error(error);
 		}
@@ -21,7 +21,7 @@ function RedirectList({ redirects, setRedirects, setActiveRedirect, credentials 
 						redirect={redirect}
 						setRedirects={setRedirects}
 						setActiveRedirect={setActiveRedirect}
-						token={credentials.token}
+						token={token}
 					/>
 				))}
 			</ul>
