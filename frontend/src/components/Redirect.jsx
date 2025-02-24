@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer } from "react-leaflet";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import { useState } from "react";
 import { deleteRedirect } from "../api/redirects";
 import RedirectUpdateForm from "./RedirectUpdateForm";
@@ -32,7 +32,14 @@ function Redirect({ redirect, reports, setRedirects, setActiveRedirect, token })
 		navigator.clipboard.writeText(shortUrl);
 		alert(`copied ${shortUrl} to clipboard`);
 	}
-	
+
+	const clickMarkers = reports
+		.filter((report) => report.location)
+		.map((report) => {
+			const position = report.location.split(",");
+			return <Marker position={position} />
+		});
+
 	return (
 		<>
 			<h2>{redirect.short_path}</h2>
@@ -65,6 +72,7 @@ function Redirect({ redirect, reports, setRedirects, setActiveRedirect, token })
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				/>
+				{clickMarkers}
 			</MapContainer>
 			<h3>Accesses over time</h3>
 			<p>Graph placeholder</p>
