@@ -37,7 +37,7 @@ function Redirect({ redirect, reports, setRedirects, setActiveRedirect, token })
 		.filter((report) => report.location)
 		.map((report) => {
 			const position = report.location.split(",");
-			return <Marker position={position} />
+			return <Marker key={report.id} position={position} />
 		});
 
 	return (
