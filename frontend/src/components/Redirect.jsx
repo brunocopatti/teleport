@@ -1,6 +1,6 @@
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import { useState } from "react";
-import { deleteRedirect } from "../api/redirects";
+import { deleteRedirect, getRedirectById } from "../api/redirects";
 import RedirectUpdateForm from "./RedirectUpdateForm";
 import "leaflet/dist/leaflet.css";
 
@@ -20,6 +20,15 @@ function Redirect({ redirect, reports, setRedirects, setActiveRedirect, token })
 	const shortUrl = `${getBaseUrl()}${redirect.short_path}`;
 
 	const [isEditing, setIsEditing] = useState(false);
+
+	const onRefresh = async () => {
+		try {
+			setActiveRedirect(await getRedirectById({ id: redirect.id }, { token }));
+		} catch (error) {
+			setActiveRedirect(null);
+			console.error(error);
+		}
+	}
 
 	const onDelete = async () => {
 		try {
@@ -48,6 +57,7 @@ function Redirect({ redirect, reports, setRedirects, setActiveRedirect, token })
 	return (
 		<>
 			<h2>{redirect.short_path}</h2>
+			<button onClick={onRefresh}>Refresh</button>
 			<p>Access count: {redirect.clicks}</p>
 			<div>
 				<p>
