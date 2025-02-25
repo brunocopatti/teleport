@@ -8,7 +8,12 @@ const getBaseUrl = () => {
 	if (import.meta.env.VITE_API_URL) {
 		return `${import.meta.env.VITE_API_URL}/`
 	}
-	return window.location.href;
+	try {
+		return window.location.href;
+	} catch {
+		// Browser doesn't support this
+		return "/";
+	}
 }
 
 function Redirect({ redirect, reports, setRedirects, setActiveRedirect, token }) {
