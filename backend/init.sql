@@ -20,5 +20,6 @@ CREATE TABLE `redirect_reports` (
 	`id` INT PRIMARY KEY AUTO_INCREMENT,
 	`redirect_id` INT NOT NULL,
 	`location` VARCHAR(255),
-	`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY(`redirect_id`) REFERENCES `redirects`(`id`) ON DELETE CASCADE
 );
