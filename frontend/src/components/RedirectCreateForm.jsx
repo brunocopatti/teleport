@@ -14,7 +14,7 @@ const redirectSchema = z.object({
     .max(255, "Must have less than 255 characters")
 });
 
-function CreateRedirectForm({ token, setRedirects }) {
+function RedirectCreateForm({ token, setRedirects }) {
 	const {
     register,
     handleSubmit,
@@ -69,4 +69,4 @@ function CreateRedirectForm({ token, setRedirects }) {
 	)
 }
 
-export default CreateRedirectForm;
+export default RedirectCreateForm;

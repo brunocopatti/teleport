@@ -12,7 +12,7 @@ const userSchema = z.object({
 		.max(255, "Password must have less than 255 characters")
 });
 
-function CreateUserForm() {
+function UserCreateForm() {
 	const {
     register,
     handleSubmit,
@@ -66,4 +66,4 @@ function CreateUserForm() {
 	)
 }
 
-export default CreateUserForm;
+export default UserCreateForm;
