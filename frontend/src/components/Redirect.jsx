@@ -3,6 +3,7 @@ import { useState } from "react";
 import { deleteRedirect, getRedirectById } from "../api/redirects";
 import RedirectUpdateForm from "./RedirectUpdateForm";
 import "leaflet/dist/leaflet.css";
+import RedirectGraph from "./RedirectGraph";
 
 const getBaseUrl = () => {
 	if (import.meta.env.VITE_API_URL) {
@@ -90,7 +91,7 @@ function Redirect({ redirect, reports, setRedirects, setActiveRedirect, token })
 				{clickMarkers}
 			</MapContainer>
 			<h3>Accesses over time</h3>
-			<p>Graph placeholder</p>
+			<RedirectGraph />
 		</>
 	)
 }
