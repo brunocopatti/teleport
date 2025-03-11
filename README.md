@@ -9,11 +9,9 @@ Full-stack URL shortener
 	- [x] Create accounts
 	- [ ] Manage accounts
 	- [x] Authenticate to manage paths
-- [ ] Dashboard with paths generated reports
+- [x] Dashboard with paths generated reports
 	- [x] Generate reports
 		- [x] Amount of clicks
 		- [x] Geographical location
-		- [x] Access time
-	- [ ] Create dashboard
+	- [x] Create dashboard
 		- [x] Map with marker for every click location
-		- [ ] Time plot graph

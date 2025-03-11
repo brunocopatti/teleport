@@ -89,8 +89,6 @@ function Redirect({ redirect, reports, setRedirects, setActiveRedirect, token })
 				/>
 				{clickMarkers}
 			</MapContainer>
-			<h3>Accesses over time</h3>
-			<p>Graph placeholder</p>
 		</>
 	)
 }
