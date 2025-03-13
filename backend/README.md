@@ -1,10 +1,23 @@
 # Back-end
 
+## Requirements
+
+- [Node.js](https://nodejs.org/)
+- [MySQL](https://www.mysql.com/)
+
 ## Installation
+
+Ensure you install every dependency by running `npm install`.
 
 ### Database
 
-Ensure you have a MySQL database and create the tables at the `init.sql` file.
+Ensure you have a database and create the tables at the `init.sql` file, for example:
+
+```
+CREATE DATABASE `node_teleport`;
+USE `node_teleport`;
+SOURCE init.sql
+```
 
 ### Required environment variables
 
