@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const express = require("express");
-const { param } = require("express-validator");
+const { param, matchedData } = require("express-validator");
 const { IPinfoWrapper } = require("node-ipinfo");
 const cors = require("cors");
 const pool = require("./db");
@@ -22,7 +22,7 @@ app.get(
 	validateInput,
 	async (req, res, next) => {
 		try {
-			const { shortPath } = req.params;
+			const { shortPath } = matchedData(req);
 			const [results] = await pool.query(
 				"SELECT `id`, `destination_url` FROM `redirects` WHERE `short_path` = ?",
 				[shortPath]
