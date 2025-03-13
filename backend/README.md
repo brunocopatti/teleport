@@ -30,3 +30,7 @@ Add the following variables to your `.env` file:
 - `DB_PASSWORD`
 - `DB_NAME`
 - `IPINFO_TOKEN`: API token from [IPinfo](https://ipinfo.io/).
+
+## Running the application
+
+To start the application run `npm run start`.
