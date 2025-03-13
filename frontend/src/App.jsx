@@ -4,12 +4,15 @@ import LoginForm from "./components/LoginForm";
 import RedirectCreateForm from "./components/RedirectCreateForm";
 import RedirectList from "./components/RedirectList";
 import Redirect from "./components/Redirect";
+import Notification from "./components/Notification";
+import useNotification from "./hooks/useNotification";
 import { getRedirects } from "./api/redirects";
 
 function App() {
 	const [credentials, setCredentials] = useState(null);
 	const [redirects, setRedirects] = useState([]);
 	const [activeRedirect, setActiveRedirect] = useState(null);
+	const { notification, notificate } = useNotification();
 
 	const onLogout = () => {
 		setCredentials(null);
@@ -31,6 +34,7 @@ function App() {
 	if (credentials) {
 		return (
 			<>
+				<Notification notification={notification} />
 				<p>Authenticated as {credentials.user.username}</p>
 				<button onClick={onLogout}>Logout</button>
 				{activeRedirect ? (
@@ -69,6 +73,7 @@ function App() {
 	}
 	return (
 		<>
+			<Notification notification={notification} />
 			<UserCreateForm/>
 			<LoginForm setCredentials={setCredentials} />
 		</>
