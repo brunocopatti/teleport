@@ -12,7 +12,7 @@ const userSchema = z.object({
 		.max(255, "Password must have less than 255 characters")
 });
 
-function LoginForm({ setCredentials }) {
+function LoginForm({ setCredentials, notificate }) {
 	const {
     register,
     handleSubmit,
@@ -29,7 +29,7 @@ function LoginForm({ setCredentials }) {
       setValue("password", "");
       setCredentials(credentials);
     } catch (error) {
-      console.error(error);
+      notificate({ message: "Error authenticating", type: "error" });
     }
 	};
 

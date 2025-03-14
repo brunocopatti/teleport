@@ -1,5 +1,6 @@
 const express = require("express");
 const { body, param, matchedData } = require("express-validator");
+const mysqlErrorKeys = require("mysql-error-keys");
 const pool = require("../db");
 const { validateInput } = require("../middleware/validator");
 const loginRequired = require("../middleware/loginRequired");
@@ -33,6 +34,9 @@ redirectsRouter.post(
 			);
 			return res.status(201).json(results[0]);
 		} catch (error) {
+			if (error.code === mysqlErrorKeys.ER_DUP_ENTRY) {
+				return res.status(400).json({ "error": "Short path already taken" });
+			}
 			return next(error);
 		}
 	}
@@ -127,6 +131,9 @@ redirectsRouter.put(
 			);
 			return res.json(results[0]);
 		} catch (error) {
+			if (error.code === mysqlErrorKeys.ER_DUP_ENTRY) {
+				return res.status(400).json({ "error": "Short path already taken" });
+			}
 			return next(error);
 		}
 	}

@@ -25,7 +25,10 @@ function App() {
 				try {
 					setRedirects(await getRedirects({ token: credentials.token }));
 				} catch (error) {
-					console.error(error);
+					notificate({
+						message: "Error retrieving redirects",
+						type: "error"
+					});
 				}
 			}
 		})();
@@ -52,6 +55,7 @@ function App() {
 							setRedirects={setRedirects}
 							setActiveRedirect={setActiveRedirect}
 							token={credentials.token}
+							notificate={notificate}
 						/>
 					</>
 				) : (
@@ -74,8 +78,8 @@ function App() {
 	return (
 		<>
 			<Notification notification={notification} />
-			<UserCreateForm/>
-			<LoginForm setCredentials={setCredentials} />
+			<UserCreateForm notificate={notificate} />
+			<LoginForm setCredentials={setCredentials} notificate={notificate} />
 		</>
 	)
 }

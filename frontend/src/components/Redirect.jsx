@@ -16,7 +16,14 @@ const getBaseUrl = () => {
 	}
 }
 
-function Redirect({ redirect, reports, setRedirects, setActiveRedirect, token }) {
+function Redirect({
+	redirect,
+	reports,
+	setRedirects,
+	setActiveRedirect,
+	token,
+	notificate
+}) {
 	const shortUrl = `${getBaseUrl()}${redirect.short_path}`;
 
 	const [isEditing, setIsEditing] = useState(false);
@@ -26,7 +33,10 @@ function Redirect({ redirect, reports, setRedirects, setActiveRedirect, token })
 			setActiveRedirect(await getRedirectById({ id: redirect.id }, { token }));
 		} catch (error) {
 			setActiveRedirect(null);
-			console.error(error);
+			notificate({
+				message: "",
+				type: "error"
+			});
 		}
 	}
 
