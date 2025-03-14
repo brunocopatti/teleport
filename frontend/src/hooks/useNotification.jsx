@@ -5,7 +5,7 @@ let timeoutId;
 function useNotification() {
     const [notification, setNotification] = useState(null);
 
-    const notificate = (newNotification, timeout) => {
+    const notificate = (newNotification, timeout=5000) => {
         clearTimeout(timeoutId);
         setNotification(newNotification);
         timeoutId = setTimeout(() => {
