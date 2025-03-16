@@ -93,6 +93,7 @@ function Redirect({
 						redirect={redirect}
 						setRedirects={setRedirects}
 						setActiveRedirect={setActiveRedirect}
+						setIsEditing={setIsEditing}
 						token={token}
 						notificate={notificate}
 					/>

@@ -14,7 +14,14 @@ const redirectSchema = z.object({
 		.max(255, "Must have less than 255 characters")
 });
 
-function RedirectUpdateForm({	redirect, setRedirects, setActiveRedirect, token, notificate }) {
+function RedirectUpdateForm({
+	redirect,
+	setRedirects,
+	setActiveRedirect,
+	setIsEditing,
+	token,
+	notificate
+}) {
 	const {
     register,
     handleSubmit,
@@ -44,6 +51,7 @@ function RedirectUpdateForm({	redirect, setRedirects, setActiveRedirect, token, 
 				))
 			));
 			setActiveRedirect(updatedActiveRedirect);
+			setIsEditing(false);
     } catch (error) {
       notificate({
 				message: "Error updating Redirect",
