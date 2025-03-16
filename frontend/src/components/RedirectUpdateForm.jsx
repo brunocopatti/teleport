@@ -25,7 +25,8 @@ function RedirectUpdateForm({
 	const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+		setError
   } = useForm({
     resolver: zodResolver(redirectSchema),
 		defaultValues: {
@@ -53,6 +54,11 @@ function RedirectUpdateForm({
 			setActiveRedirect(updatedActiveRedirect);
 			setIsEditing(false);
     } catch (error) {
+			const message = error.response.data.error;
+      if (message === "Short path already taken") {
+        setError("shortPath", { message });
+        return;
+      }
       notificate({
 				message: "Error updating Redirect",
 				type: "error"

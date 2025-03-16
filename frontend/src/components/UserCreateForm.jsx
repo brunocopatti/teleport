@@ -17,7 +17,8 @@ function UserCreateForm({ notificate }) {
     register,
     handleSubmit,
     formState: { errors },
-    setValue
+    setValue,
+    setError
   } = useForm({
     resolver: zodResolver(userSchema),
   });
@@ -29,6 +30,11 @@ function UserCreateForm({ notificate }) {
       setValue("password", "");
       notificate({ message: "User created sucessfuly", type: "success" });
     } catch (error) {
+      const message = error.response.data.error || "Error creating user";
+      if (message === "Username already taken") {
+        setError("username", { message });
+        return;
+      }
       notificate({ message, type: "error" });
     }
 	};

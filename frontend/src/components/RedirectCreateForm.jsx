@@ -19,7 +19,8 @@ function RedirectCreateForm({ token, setRedirects, notificate }) {
     register,
     handleSubmit,
     formState: { errors },
-    setValue
+    setValue,
+    setError
   } = useForm({
     resolver: zodResolver(redirectSchema),
   });
@@ -34,6 +35,11 @@ function RedirectCreateForm({ token, setRedirects, notificate }) {
       ));
       notificate({ message: "Redirect created sucessfuly", type: "success" });
     } catch (error) {
+      const message = error.response.data.error;
+      if (message === "Short path already taken") {
+        setError("shortPath", { message });
+        return;
+      }
       notificate({
 				message: "Error updating Redirect",
 				type: "error"
