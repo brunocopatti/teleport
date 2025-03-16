@@ -16,7 +16,14 @@ const getBaseUrl = () => {
 	}
 }
 
-function Redirect({ redirect, reports, setRedirects, setActiveRedirect, token }) {
+function Redirect({
+	redirect,
+	reports,
+	setRedirects,
+	setActiveRedirect,
+	token,
+	notificate
+}) {
 	const shortUrl = `${getBaseUrl()}${redirect.short_path}`;
 
 	const [isEditing, setIsEditing] = useState(false);
@@ -26,7 +33,10 @@ function Redirect({ redirect, reports, setRedirects, setActiveRedirect, token })
 			setActiveRedirect(await getRedirectById({ id: redirect.id }, { token }));
 		} catch (error) {
 			setActiveRedirect(null);
-			console.error(error);
+			notificate({
+				message: "Error refreshing Redirect",
+				type: "error"
+			});
 		}
 	}
 
@@ -38,13 +48,19 @@ function Redirect({ redirect, reports, setRedirects, setActiveRedirect, token })
 			)));
 			setActiveRedirect(null);
 		} catch (error) {
-			console.error(error);
+			notificate({
+				message: "Error deleting Redirect",
+				type: "error"
+			});
 		}
 	}
 
 	const copyShortUrl = () => {
 		navigator.clipboard.writeText(shortUrl);
-		alert(`copied ${shortUrl} to clipboard`);
+		notificate({
+			message: `Copied ${shortUrl} to clipboard`,
+			type: "success"
+		});
 	}
 
 	const clickMarkers = reports
@@ -78,6 +94,7 @@ function Redirect({ redirect, reports, setRedirects, setActiveRedirect, token })
 						setRedirects={setRedirects}
 						setActiveRedirect={setActiveRedirect}
 						token={token}
+						notificate={notificate}
 					/>
 				</>
 			)}

@@ -12,7 +12,7 @@ const userSchema = z.object({
 		.max(255, "Password must have less than 255 characters")
 });
 
-function UserCreateForm() {
+function UserCreateForm({ notificate }) {
 	const {
     register,
     handleSubmit,
@@ -24,12 +24,12 @@ function UserCreateForm() {
 
 	const onSubmit = async (data) => {
     try {
-      const user = await createUser(data);
+      await createUser(data);
       setValue("username", "");
       setValue("password", "");
-      console.log("User created:", user);
+      notificate({ message: "User created sucessfuly", type: "success" });
     } catch (error) {
-      console.error(error);
+      notificate({ message, type: "error" });
     }
 	};
 

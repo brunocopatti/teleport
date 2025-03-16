@@ -1,12 +1,15 @@
 import { getRedirects } from "../api/redirects";
 import RedirectItem from "./RedirectItem";
 
-function RedirectList({ redirects, setRedirects, setActiveRedirect, token }) {
+function RedirectList({ redirects, setRedirects, setActiveRedirect, token, notificate }) {
 	const onRefresh = async () => {
 		try {
 			setRedirects(await getRedirects({ token }));
 		} catch (error) {
-			console.error(error);
+			notificate({
+				message: "Error refreshing Redirect list",
+				type: "error"
+			});
 		}
 	};
 
