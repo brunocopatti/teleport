@@ -1,6 +1,7 @@
 const express = require("express");
 const { body, matchedData } = require("express-validator");
 const argon2 = require("argon2");
+const mysqlErrorKeys = require("mysql-error-keys");
 const pool = require("../db");
 const { validateInput } = require("../middleware/validator");
 
@@ -29,6 +30,9 @@ usersRouter.post(
 			delete user.password_hash;
 			return res.status(201).json(user);
 		} catch (error) {
+			if (error.code === mysqlErrorKeys.ER_DUP_ENTRY) {
+				return res.status(400).json({ "error": "Username already taken" });
+			}
 			return next(error);
 		}
 	}
