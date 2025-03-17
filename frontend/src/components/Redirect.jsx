@@ -56,11 +56,18 @@ function Redirect({
 	}
 
 	const copyShortUrl = () => {
-		navigator.clipboard.writeText(shortUrl);
-		notificate({
-			message: `Copied ${shortUrl} to clipboard`,
-			type: "success"
-		});
+		try {
+			navigator.clipboard.writeText(shortUrl);
+			notificate({
+				message: `Copied ${shortUrl} to clipboard`,
+				type: "success"
+			});
+		} catch (error) {
+			notificate({
+				message: "Copying to clipboard not supported",
+				type: "error"
+			});
+		}
 	}
 
 	const clickMarkers = reports
