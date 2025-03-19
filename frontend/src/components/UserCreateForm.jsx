@@ -30,7 +30,7 @@ function UserCreateForm({ notificate }) {
       setValue("password", "");
       notificate({ message: "User created sucessfuly", type: "success" });
     } catch (error) {
-      const message = error.response.data.error || "Error creating user";
+      const message = error.response?.data.error || "Error creating user";
       if (message === "Username already taken") {
         setError("username", { message });
         return;

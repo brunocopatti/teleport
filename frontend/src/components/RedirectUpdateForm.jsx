@@ -54,7 +54,7 @@ function RedirectUpdateForm({
 			setActiveRedirect(updatedActiveRedirect);
 			setIsEditing(false);
     } catch (error) {
-			const message = error.response.data.error;
+			const message = error.response?.data.error;
       if (message === "Short path already taken") {
         setError("shortPath", { message });
         return;
