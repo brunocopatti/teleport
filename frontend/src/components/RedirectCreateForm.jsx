@@ -60,7 +60,7 @@ function RedirectCreateForm({ token, setRedirects, notificate }) {
             placeholder="short path"
             />
           </label>
-          {errors.shortPath && <p>{errors.shortPath.message}</p>}
+          {errors.shortPath && <p className="text-red-700">{errors.shortPath.message}</p>}
         </div>
   
         <div>
@@ -72,7 +72,7 @@ function RedirectCreateForm({ token, setRedirects, notificate }) {
               placeholder="destination url"
             />
           </label>
-          {errors.destinationUrl && <p>{errors.destinationUrl.message}</p>}
+          {errors.destinationUrl && <p className="text-red-700">{errors.destinationUrl.message}</p>}
         </div>
       </div>
       <button

@@ -57,7 +57,7 @@ function UserCreateForm({ notificate }) {
               placeholder="username"
             />
           </label>
-          {errors.username && <p>{errors.username.message}</p>}
+          {errors.username && <p className="text-red-700">{errors.username.message}</p>}
         </div>
   
         <div>
@@ -70,7 +70,7 @@ function UserCreateForm({ notificate }) {
               placeholder="password"
             />
           </label>
-          {errors.password && <p>{errors.password.message}</p>}
+          {errors.password && <p className="text-red-700">{errors.password.message}</p>}
         </div>
       </div>
       <button
