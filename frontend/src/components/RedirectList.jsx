@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { RefreshCw } from "lucide-react";
 import { getRedirects } from "../api/redirects";
 import RedirectItem from "./RedirectItem";
 
@@ -27,7 +28,8 @@ function RedirectList({ redirects, setRedirects, setActiveRedirect, token, notif
 				onClick={onRefresh}
 				disabled={isLoading}
 			>
-				Refresh
+				<RefreshCw />
+				<span className="sr-only">Refresh</span>
 			</button>
 			{redirects.length > 0 ? (
 				<ul className="flex flex-col gap-1">

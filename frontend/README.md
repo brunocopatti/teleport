@@ -3,7 +3,7 @@
 ## To do
 
 - [ ] Dark mode
-- [ ] Icons
+- [x] Icons
 - [x] Loading states
 - [ ] SEO
 - [ ] Keep jwt at browser

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Copy, CornerDownLeft, Pencil, PencilOff, RefreshCw, Trash2 } from "lucide-react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import { Icon } from "leaflet";
 import { deleteRedirect, getRedirectById } from "../api/redirects";
@@ -103,7 +104,8 @@ function Redirect({
 					}}
 					disabled={isLoading}
 				>
-					Return
+					<span className="sr-only">Return</span>
+					<CornerDownLeft />
 				</button>
 				<h3 className="text-3xl">
 					{redirect.short_path}
@@ -115,20 +117,23 @@ function Redirect({
 					onClick={onRefresh}
 					disabled={isLoading}
 				>
-					Refresh
+					<span className="sr-only">Refresh</span>
+					<RefreshCw />
 				</button>
 				<button
 					className="rounded-3xl px-2 py-1 border cursor-pointer border-red-500 text-red-500 disabled:opacity-50 disabled:cursor-auto"
 					onClick={onDelete}
 					disabled={isLoading}
 				>
-					Delete
+					<span className="sr-only">Delete</span>
+					<Trash2 />
 				</button>
 				<button
 					className="rounded-3xl px-2 py-1 border cursor-pointer"
 					onClick={() => setIsEditing(!isEditing)}
 				>
-					{isEditing ? 'Stop editing' : 'Edit'}
+					<span className="sr-only">{isEditing ? 'Stop editing' : 'Edit'}</span>
+					{isEditing ? <PencilOff /> : <Pencil />}
 				</button>
 			</div>
 			{isEditing && (
@@ -147,16 +152,17 @@ function Redirect({
 				<p>{redirect.clicks} clicks</p>
 				<div className="flex items-center gap-2">
 					<p>
-						short URL: <a className="underline" href={shortUrl}>{shortUrl}</a>
+						Short URL: <a className="underline" href={shortUrl}>{shortUrl}</a>
 					</p>
 					<button
 						className="rounded-3xl px-3 py-0.5 border cursor-pointer"
 						onClick={copyShortUrl}
 					>
-						copy
+						<span className="sr-only">Copy</span>
+						<Copy />
 					</button>
 				</div>
-				<p>destination URL: <a className="underline" href={redirect.destination_url}>{redirect.destination_url}</a></p>
+				<p>Destination URL: <a className="underline" href={redirect.destination_url}>{redirect.destination_url}</a></p>
 			</div>
 			<div>
 				<h3 className="text-2xl mb-1">

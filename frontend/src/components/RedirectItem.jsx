@@ -1,3 +1,4 @@
+import { Trash2 } from "lucide-react";
 import { deleteRedirect, getRedirectById } from "../api/redirects";
 
 function RedirectItem({ redirect, setRedirects, setActiveRedirect, token, isLoading, setIsLoading }) {
@@ -50,7 +51,8 @@ function RedirectItem({ redirect, setRedirects, setActiveRedirect, token, isLoad
 				onClick={onDelete}
 				disabled={isLoading}
 			>
-				Delete
+				<span className="sr-only">Delete</span>
+				<Trash2 />
 			</button>
 		</li>
 	)

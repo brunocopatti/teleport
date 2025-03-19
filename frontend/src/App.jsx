@@ -2,15 +2,18 @@ import { useState } from "react";
 import Notification from "./components/Notification";
 import useNotification from "./hooks/useNotification";
 import Main from "./components/Main";
+import { Github, Linkedin } from "lucide-react";
 
 const socials = [
 	{
 		"name": "LinkedIn",
-		"url": "https://linkedin.com/in/brunocopatti"
+		"url": "https://linkedin.com/in/brunocopatti",
+		"icon": <Linkedin />
 	},
 	{
 		"name": "GitHub",
-		"url": "https://github.com/brunocopatti"
+		"url": "https://github.com/brunocopatti",
+		"icon": <Github />
 	},
 	{
 		"name": "Portfolio",
@@ -68,7 +71,14 @@ function App() {
 							href={social.url}
 							target="_blank"
 						>
-							{social.name}
+							{social.icon ? (
+								<>
+									<span className="sr-only">{social.name}</span>
+									{social.icon}
+								</>
+							) : (
+								<>{social.name}</>
+							)}
 						</a>
 					))}
 				</div>
