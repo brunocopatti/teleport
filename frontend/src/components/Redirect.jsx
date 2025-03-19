@@ -1,8 +1,10 @@
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import { Icon } from "leaflet";
 import { useState } from "react";
 import { deleteRedirect, getRedirectById } from "../api/redirects";
 import RedirectUpdateForm from "./RedirectUpdateForm";
 import "leaflet/dist/leaflet.css";
+import markerIconPng from "leaflet/dist/images/marker-icon.png";
 
 const getBaseUrl = () => {
 	if (import.meta.env.VITE_API_URL) {
@@ -74,7 +76,13 @@ function Redirect({
 		.filter((report) => report.location)
 		.map((report) => {
 			const position = report.location.split(",");
-			return <Marker key={report.id} position={position} />
+			return (
+				<Marker
+					key={report.id}
+					position={position}
+					icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}
+				/>
+			);
 		});
 
 	return (
