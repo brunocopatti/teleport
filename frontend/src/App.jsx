@@ -45,13 +45,14 @@ function App() {
 				/>
 			</div>
 			<footer className="flex flex-col lg:flex-row gap-2 justify-between items-center mx-auto max-w-6xl w-full px-3 py-5">
-				<p>Created by <a className="underline" href="https://github.com/brunocopatti">Bruno Copatti</a></p>
+				<p>Created by <a className="underline" href="https://github.com/brunocopatti" target="_blank">Bruno Copatti</a></p>
 				<div className="flex items-center gap-2">
 					{socials.map((social) => (
 						<a
 							className="lowercase px-3 py-0.5 border rounded-xl"
 							key={social.name}
 							href={social.url}
+							target="_blank"
 						>
 							{social.name}
 						</a>
