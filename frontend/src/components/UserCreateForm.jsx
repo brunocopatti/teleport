@@ -61,6 +61,7 @@ function UserCreateForm({ notificate }) {
               className="border px-4 py-1 rounded-full w-60 disabled:opacity-50"
               {...register("username")}
               placeholder="username"
+              disabled={isLoading}
             />
           </label>
           {errors.username && <p className="text-red-700">{errors.username.message}</p>}
@@ -74,6 +75,7 @@ function UserCreateForm({ notificate }) {
               type="password"
               {...register("password")}
               placeholder="password"
+              disabled={isLoading}
             />
           </label>
           {errors.password && <p className="text-red-700">{errors.password.message}</p>}
@@ -82,6 +84,7 @@ function UserCreateForm({ notificate }) {
       <button
         className="rounded-full px-8 py-2 bg-black text-white text-lg cursor-pointer disabled:opacity-50 disabled:cursor-auto"
         type="submit"
+        disabled={isLoading}
       >
         Create account
       </button>
