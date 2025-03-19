@@ -4,7 +4,7 @@
 
 - [ ] Dark mode
 - [ ] Icons
-- [ ] Loading states
+- [x] Loading states
 - [ ] SEO
 - [ ] Keep jwt at browser
 

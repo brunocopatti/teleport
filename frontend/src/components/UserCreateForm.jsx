@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -13,6 +14,8 @@ const userSchema = z.object({
 });
 
 function UserCreateForm({ notificate }) {
+  const [isLoading, setIsLoading] = useState(false);
+
 	const {
     register,
     handleSubmit,
@@ -25,6 +28,7 @@ function UserCreateForm({ notificate }) {
 
 	const onSubmit = async (data) => {
     try {
+      setIsLoading(true);
       await createUser(data);
       setValue("username", "");
       setValue("password", "");
@@ -36,6 +40,8 @@ function UserCreateForm({ notificate }) {
         return;
       }
       notificate({ message, type: "error" });
+    } finally {
+      setIsLoading(false);
     }
 	};
 
@@ -52,7 +58,7 @@ function UserCreateForm({ notificate }) {
           <label>
             <span className="sr-only">Username</span>
             <input
-              className="border px-4 py-1 rounded-full w-60"
+              className="border px-4 py-1 rounded-full w-60 disabled:opacity-50"
               {...register("username")}
               placeholder="username"
             />
@@ -64,7 +70,7 @@ function UserCreateForm({ notificate }) {
           <label>
             <span className="sr-only">Password</span>
             <input
-              className="border px-4 py-1 rounded-full w-60"
+              className="border px-4 py-1 rounded-full w-60 disabled:opacity-50"
               type="password"
               {...register("password")}
               placeholder="password"
@@ -74,7 +80,7 @@ function UserCreateForm({ notificate }) {
         </div>
       </div>
       <button
-        className="rounded-full px-8 py-2 bg-black text-white text-lg cursor-pointer"
+        className="rounded-full px-8 py-2 bg-black text-white text-lg cursor-pointer disabled:opacity-50 disabled:cursor-auto"
         type="submit"
       >
         Create account

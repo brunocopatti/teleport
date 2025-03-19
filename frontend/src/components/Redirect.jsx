@@ -1,6 +1,6 @@
+import { useState } from "react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import { Icon } from "leaflet";
-import { useState } from "react";
 import { deleteRedirect, getRedirectById } from "../api/redirects";
 import RedirectUpdateForm from "./RedirectUpdateForm";
 import "leaflet/dist/leaflet.css";
@@ -26,12 +26,15 @@ function Redirect({
 	token,
 	notificate
 }) {
+	const [isLoading, setIsLoading] = useState(false);
+
 	const shortUrl = `${getBaseUrl()}${redirect.short_path}`;
 
 	const [isEditing, setIsEditing] = useState(false);
 
 	const onRefresh = async () => {
 		try {
+			setIsLoading(true);
 			setActiveRedirect(await getRedirectById({ id: redirect.id }, { token }));
 		} catch (error) {
 			setActiveRedirect(null);
@@ -39,11 +42,14 @@ function Redirect({
 				message: "Error refreshing Redirect",
 				type: "error"
 			});
+		} finally {
+			setIsLoading(false);
 		}
 	}
 
 	const onDelete = async () => {
 		try {
+			setIsLoading(true);
 			await deleteRedirect({ id: redirect.id }, { token });
 			setRedirects((redirects) => redirects.filter((r) => (
 				r.id !== redirect.id
@@ -54,6 +60,8 @@ function Redirect({
 				message: "Error deleting Redirect",
 				type: "error"
 			});
+		} finally {
+			setIsLoading(false);
 		}
 	}
 
@@ -89,10 +97,11 @@ function Redirect({
 		<div className="flex flex-col gap-5 mx-auto max-w-6xl w-full px-3">
 			<div className="flex items-center gap-3">
 				<button
-					className="rounded-3xl px-2 py-1 border cursor-pointer"
+					className="rounded-3xl px-2 py-1 border cursor-pointer disabled:opacity-50 disabled:cursor-auto"
 					onClick={() => {
 						setActiveRedirect(null);
 					}}
+					disabled={isLoading}
 				>
 					Return
 				</button>
@@ -102,14 +111,16 @@ function Redirect({
 			</div>
 			<div className="flex gap-1">
 				<button
-					className="rounded-3xl px-2 py-1 border cursor-pointer"
+					className="rounded-3xl px-2 py-1 border cursor-pointer disabled:opacity-50 disabled:cursor-auto"
 					onClick={onRefresh}
+					disabled={isLoading}
 				>
 					Refresh
 				</button>
 				<button
-					className="rounded-3xl px-2 py-1 border cursor-pointer border-red-500 text-red-500"
+					className="rounded-3xl px-2 py-1 border cursor-pointer border-red-500 text-red-500 disabled:opacity-50 disabled:cursor-auto"
 					onClick={onDelete}
+					disabled={isLoading}
 				>
 					Delete
 				</button>
@@ -128,6 +139,8 @@ function Redirect({
 					setIsEditing={setIsEditing}
 					token={token}
 					notificate={notificate}
+					isLoading={isLoading}
+					setIsLoading={setIsLoading}
 				/>
 			)}
 			<div className="flex flex-col gap-1">

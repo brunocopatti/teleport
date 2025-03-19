@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -20,7 +21,9 @@ function RedirectUpdateForm({
 	setActiveRedirect,
 	setIsEditing,
 	token,
-	notificate
+	notificate,
+	isLoading,
+	setIsLoading
 }) {
 	const {
     register,
@@ -37,6 +40,7 @@ function RedirectUpdateForm({
 
 	const onSubmit = async (data) => {
     try {
+			setIsLoading(true);
       const updatedRedirect = await updateRedirect(
 				{ id: redirect.id },
 				data,
@@ -63,7 +67,9 @@ function RedirectUpdateForm({
 				message: "Error updating Redirect",
 				type: "error"
 			});
-    }
+    } finally {
+			setIsLoading(false);
+		}
 	};
 
 	return (
@@ -74,9 +80,10 @@ function RedirectUpdateForm({
           <label>
             <span className="sr-only">Short path</span>
             <input
-              className="border px-4 py-1 rounded-full w-60"
+              className="border px-4 py-1 rounded-full w-60 disabled:opacity-50"
               {...register("shortPath")}
-            placeholder="short path"
+            	placeholder="short path"
+							disabled={isLoading}
             />
           </label>
           {errors.shortPath && <p className="text-red-700">{errors.shortPath.message}</p>}
@@ -86,17 +93,19 @@ function RedirectUpdateForm({
           <label>
             <span className="sr-only">Destination URL</span>
             <input
-              className="border px-4 py-1 rounded-full w-60"
+              className="border px-4 py-1 rounded-full w-60 disabled:opacity-50"
               {...register("destinationUrl")}
               placeholder="destination url"
+							disabled={isLoading}
             />
           </label>
           {errors.destinationUrl && <p className="text-red-700">{errors.destinationUrl.message}</p>}
         </div>
       </div>
       <button
-        className="rounded-full px-8 py-2 bg-black text-white text-lg cursor-pointer"
+        className="rounded-full px-8 py-2 bg-black text-white text-lg cursor-pointer disabled:opacity-50 disabled:cursor-auto"
         type="submit"
+				disabled={isLoading}
       >
         Update
       </button>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -15,6 +16,8 @@ const redirectSchema = z.object({
 });
 
 function RedirectCreateForm({ token, setRedirects, notificate }) {
+  const [isLoading, setIsLoading] = useState(false);
+
 	const {
     register,
     handleSubmit,
@@ -27,6 +30,7 @@ function RedirectCreateForm({ token, setRedirects, notificate }) {
 
 	const onSubmit = async (data) => {
     try {
+      setIsLoading(true);
       const redirect = await createRedirect(data, { token });
       setValue("shortPath", "");
       setValue("destinationUrl", "");
@@ -44,6 +48,8 @@ function RedirectCreateForm({ token, setRedirects, notificate }) {
 				message: "Error updating Redirect",
 				type: "error"
 			});
+    } finally {
+      setIsLoading(false);
     }
 	};
 
@@ -55,9 +61,10 @@ function RedirectCreateForm({ token, setRedirects, notificate }) {
           <label>
             <span className="sr-only">Short path</span>
             <input
-              className="border px-4 py-1 rounded-full w-60"
+              className="border px-4 py-1 rounded-full w-60 disabled:opacity-50"
               {...register("shortPath")}
-            placeholder="short path"
+              placeholder="short path"
+              disabled={isLoading}
             />
           </label>
           {errors.shortPath && <p className="text-red-700">{errors.shortPath.message}</p>}
@@ -67,17 +74,19 @@ function RedirectCreateForm({ token, setRedirects, notificate }) {
           <label>
             <span className="sr-only">Destination URL</span>
             <input
-              className="border px-4 py-1 rounded-full w-60"
+              className="border px-4 py-1 rounded-full w-60 disabled:opacity-50"
               {...register("destinationUrl")}
               placeholder="destination url"
+              disabled={isLoading}
             />
           </label>
           {errors.destinationUrl && <p className="text-red-700">{errors.destinationUrl.message}</p>}
         </div>
       </div>
       <button
-        className="rounded-full px-8 py-2 bg-black text-white text-lg cursor-pointer"
+        className="rounded-full px-8 py-2 bg-black text-white text-lg cursor-pointer disabled:opacity-50 disabled:cursor-auto"
         type="submit"
+        disabled={isLoading}
       >
         Create
       </button>

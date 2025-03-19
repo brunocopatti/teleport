@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -13,6 +14,8 @@ const userSchema = z.object({
 });
 
 function LoginForm({ setCredentials, notificate, setActiveRedirect }) {
+  const [isLoading, setIsLoading] = useState(false);
+
 	const {
     register,
     handleSubmit,
@@ -24,6 +27,7 @@ function LoginForm({ setCredentials, notificate, setActiveRedirect }) {
 
 	const onSubmit = async (data) => {
 		try {
+      setIsLoading(true);
       const credentials = await authenticate(data);
       setValue("username", "");
       setValue("password", "");
@@ -31,6 +35,8 @@ function LoginForm({ setCredentials, notificate, setActiveRedirect }) {
       setActiveRedirect(null);
     } catch (error) {
       notificate({ message: "Error authenticating", type: "error" });
+    } finally {
+      setIsLoading(false);
     }
 	};
 
@@ -45,9 +51,10 @@ function LoginForm({ setCredentials, notificate, setActiveRedirect }) {
           <label>
             <span className="sr-only">Username</span>
             <input
-              className="border px-4 py-1 rounded-full w-60"
+              className="border px-4 py-1 rounded-full w-60 disabled:opacity-50"
               {...register("username")}
               placeholder="username"
+              disabled={isLoading}
             />
           </label>
           {errors.username && <p className="text-red-700">{errors.username.message}</p>}
@@ -57,18 +64,20 @@ function LoginForm({ setCredentials, notificate, setActiveRedirect }) {
           <label>
             <span className="sr-only">Password</span>
             <input
-              className="border px-4 py-1 rounded-full w-60"
+              className="border px-4 py-1 rounded-full w-60 disabled:opacity-50"
               type="password"
               {...register("password")}
               placeholder="password"
+              disabled={isLoading}
             />
           </label>
           {errors.password && <p className="text-red-700">{errors.password.message}</p>}
         </div>
       </div>
       <button
-        className="rounded-full px-8 py-2 bg-black text-white text-lg cursor-pointer"
+        className="rounded-full px-8 py-2 bg-black text-white text-lg cursor-pointer disabled:opacity-50 disabled:cursor-auto"
         type="submit"
+        disabled={isLoading}
       >
         Authenticate
       </button>
