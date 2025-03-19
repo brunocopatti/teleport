@@ -12,6 +12,8 @@ const { validateInput } = require("./middleware/validator");
 
 const app = express();
 
+app.use(express.static("public"));
+
 const ipinfoWrapper = new IPinfoWrapper(process.env.IPINFO_TOKEN);
 
 app.use(cors());
