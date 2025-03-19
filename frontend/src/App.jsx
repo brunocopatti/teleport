@@ -2,7 +2,21 @@ import { useState } from "react";
 import Notification from "./components/Notification";
 import useNotification from "./hooks/useNotification";
 import Main from "./components/Main";
-import socials from "./assets/socials.json";
+
+const socials = [
+	{
+		"name": "LinkedIn",
+		"url": "https://linkedin.com/in/brunocopatti"
+	},
+	{
+		"name": "GitHub",
+		"url": "https://github.com/brunocopatti"
+	},
+	{
+		"name": "Portfolio",
+		"url": "https://brunocopatti.github.io"
+	}
+]
 
 function App() {
 	const [credentials, setCredentials] = useState(null);
