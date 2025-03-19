@@ -1,5 +1,13 @@
 # Front-end
 
+## To do
+
+- [ ] Dark mode
+- [ ] Icons
+- [ ] Loading states
+- [ ] SEO
+- [ ] Keep jwt at browser
+
 ## Required environment variables
 
 Add the following variables to your `.env` file:
