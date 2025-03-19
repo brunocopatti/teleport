@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+@keyframes scaleUpDown {
+  0% {
+		transform: scale(1.2);
+	}
+
+	100% {
+		transform: scale(1);
+	}
+}
+
+#register:focus {
+	animation: scaleUpDown 0.5s ease-in-out;
+}

@@ -34,7 +34,7 @@ function App() {
 						<h2 className="text-2xl text-center lg:text-3xl lg:text-start">Shorten your URL for FREE!</h2>
 						<p className="text-xl text-center lg:text-2xl lg:text-start">And get reports about it.</p>
 					</div>
-					<a className="bg-black text-white px-7 py-3 rounded-full" href="#">Start now</a>
+					<a className="bg-black text-white px-7 py-3 rounded-full" href="#register">Start now</a>
 				</header>
 			)}
 			<div className="flex-1">

@@ -43,6 +43,8 @@ function UserCreateForm({ notificate }) {
 		<form
       className="rounded-3xl border w-full min-w-fit max-w-96 px-4 py-6 flex flex-col gap-6 items-center h-fit"
       onSubmit={handleSubmit(onSubmit)}
+      id="register"
+      tabIndex={0}
     >
 			<h3 className="text-3xl">Register</h3>
 			<div className="flex flex-col gap-2">
