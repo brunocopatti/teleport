@@ -1,88 +1,64 @@
-import { useEffect, useState } from "react";
-import UserCreateForm from "./components/UserCreateForm";
-import LoginForm from "./components/LoginForm";
-import RedirectCreateForm from "./components/RedirectCreateForm";
-import RedirectList from "./components/RedirectList";
-import Redirect from "./components/Redirect";
+import { useState } from "react";
 import Notification from "./components/Notification";
 import useNotification from "./hooks/useNotification";
-import { getRedirects } from "./api/redirects";
+import Main from "./components/Main";
+import socials from "./assets/socials.json";
 
 function App() {
 	const [credentials, setCredentials] = useState(null);
-	const [redirects, setRedirects] = useState([]);
-	const [activeRedirect, setActiveRedirect] = useState(null);
 	const { notification, notificate } = useNotification();
 
 	const onLogout = () => {
 		setCredentials(null);
-		setActiveRedirect(null);
 	}
 
-	useEffect(() => {
-		(async () => {
-			if (credentials) {
-				try {
-					setRedirects(await getRedirects({ token: credentials.token }));
-				} catch (error) {
-					notificate({
-						message: "Error retrieving redirects",
-						type: "error"
-					});
-				}
-			}
-		})();
-	}, [credentials]);
-
-	if (credentials) {
-		return (
-			<>
-				<Notification notification={notification} />
-				<p>Authenticated as {credentials.user.username}</p>
-				<button onClick={onLogout}>Logout</button>
-				{activeRedirect ? (
-					<>
-						<button 
-							onClick={() => {
-								setActiveRedirect(null);
-							}}
-						>
-							Return to redirects
-						</button>
-						<Redirect
-							redirect={activeRedirect.redirect}
-							reports={activeRedirect.reports}
-							setRedirects={setRedirects}
-							setActiveRedirect={setActiveRedirect}
-							token={credentials.token}
-							notificate={notificate}
-						/>
-					</>
-				) : (
-					<>
-						<RedirectCreateForm
-							setRedirects={setRedirects}
-							token={credentials.token}
-							notificate={notificate}
-						/>
-						<RedirectList
-							redirects={redirects}
-							setRedirects={setRedirects}
-							setActiveRedirect={setActiveRedirect}
-							token={credentials.token}
-							notificate={notificate}
-						/>
-					</>
-				)}
-			</>
-		)
-	}
 	return (
-		<>
+		<div className="min-h-screen flex flex-col">
+			<nav className="flex justify-between items-center mx-auto max-w-6xl w-full px-3 py-5">
+				<h1 className="text-2xl">teleport</h1>
+				<div className="flex items-center gap-3">
+					{credentials && (
+						<button
+							className="lowercase px-3 py-0.5 border rounded-xl border-red-500 text-red-500 cursor-pointer"
+							onClick={onLogout}
+						>
+							Logout
+						</button>
+					)}
+				</div>
+			</nav>
 			<Notification notification={notification} />
-			<UserCreateForm notificate={notificate} />
-			<LoginForm setCredentials={setCredentials} notificate={notificate} />
-		</>
+			{!credentials && (
+				<header className="flex flex-col lg:flex-row gap-6 justify-between items-center mx-auto max-w-6xl w-full px-3 py-48">
+					<div>
+						<h2 className="text-2xl text-center lg:text-3xl lg:text-start">Shorten your URL for FREE!</h2>
+						<p className="text-xl text-center lg:text-2xl lg:text-start">And get reports about it.</p>
+					</div>
+					<a className="bg-black text-white px-7 py-3 rounded-full" href="#">Start now</a>
+				</header>
+			)}
+			<div className="flex-1">
+				<Main
+					notificate={notificate}
+					credentials={credentials}
+					setCredentials={setCredentials}
+				/>
+			</div>
+			<footer className="flex flex-col lg:flex-row gap-2 justify-between items-center mx-auto max-w-6xl w-full px-3 py-5">
+				<p>Created by <a className="underline" href="https://github.com/brunocopatti">Bruno Copatti</a></p>
+				<div className="flex items-center gap-2">
+					{socials.map((social) => (
+						<a
+							className="lowercase px-3 py-0.5 border rounded-xl"
+							key={social.name}
+							href={social.url}
+						>
+							{social.name}
+						</a>
+					))}
+				</div>
+			</footer>
+		</div>
 	)
 }
 

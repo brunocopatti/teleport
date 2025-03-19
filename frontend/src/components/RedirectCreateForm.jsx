@@ -47,36 +47,42 @@ function RedirectCreateForm({ token, setRedirects, notificate }) {
     }
 	};
 
-	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
-			<h2>Create redirect</h2>
-			<div>
-        <label>
-          Short path:
-          <input
-            {...register("shortPath")}
-            placeholder="Enter the short path"
-          />
-        </label>
-        {errors.shortPath && <p>{errors.shortPath.message}</p>}
+  return (
+		<form className="rounded-3xl border w-full min-w-fit max-w-96 px-4 py-6 flex flex-col gap-6 items-center h-fit" onSubmit={handleSubmit(onSubmit)}>
+			<h3 className="text-3xl">Create redirect</h3>
+			<div className="flex flex-col gap-2">
+        <div>
+          <label>
+            <span className="sr-only">Short path</span>
+            <input
+              className="border px-4 py-1 rounded-full w-60"
+              {...register("shortPath")}
+            placeholder="short path"
+            />
+          </label>
+          {errors.shortPath && <p>{errors.shortPath.message}</p>}
+        </div>
+  
+        <div>
+          <label>
+            <span className="sr-only">Destination URL</span>
+            <input
+              className="border px-4 py-1 rounded-full w-60"
+              {...register("destinationUrl")}
+              placeholder="destination url"
+            />
+          </label>
+          {errors.destinationUrl && <p>{errors.destinationUrl.message}</p>}
+        </div>
       </div>
-
-      <div>
-        <label>
-          Destination URL:
-          <input
-            {...register("destinationUrl")}
-            placeholder="Enter the full destination URL"
-          />
-        </label>
-        {errors.destinationUrl && <p>{errors.destinationUrl.message}</p>}
-      </div>
-
-      <button type="submit">
-        Create redirect
+      <button
+        className="rounded-full px-8 py-2 bg-black text-white text-lg cursor-pointer"
+        type="submit"
+      >
+        Create
       </button>
 		</form>
-	)
+	);
 }
 
 export default RedirectCreateForm;

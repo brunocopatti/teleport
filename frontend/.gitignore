@@ -25,3 +25,5 @@ dist-ssr
 
 .env
 .env*
+
+src/assets/socials.json

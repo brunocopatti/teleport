@@ -78,43 +78,78 @@ function Redirect({
 		});
 
 	return (
-		<>
-			<h2>{redirect.short_path}</h2>
-			<button onClick={onRefresh}>Refresh</button>
-			<p>Access count: {redirect.clicks}</p>
-			<div>
-				<p>
-					Short URL: <a href={shortUrl}>{shortUrl}</a>
-				</p>
-				<button onClick={copyShortUrl}>Copy</button>
+		<div className="flex flex-col gap-5 mx-auto max-w-6xl w-full px-3">
+			<div className="flex items-center gap-3">
+				<button
+					className="rounded-3xl px-2 py-1 border cursor-pointer"
+					onClick={() => {
+						setActiveRedirect(null);
+					}}
+				>
+					Return
+				</button>
+				<h3 className="text-3xl">
+					{redirect.short_path}
+				</h3>
 			</div>
-			<p>Destination url: <a href={redirect.destination_url}>{redirect.destination_url}</a></p>
-			<button onClick={onDelete}>Delete</button>
-			<button onClick={() => setIsEditing(!isEditing)}>
-				{isEditing ? 'Stop editing' : 'Edit'}
-			</button>
+			<div className="flex gap-1">
+				<button
+					className="rounded-3xl px-2 py-1 border cursor-pointer"
+					onClick={onRefresh}
+				>
+					Refresh
+				</button>
+				<button
+					className="rounded-3xl px-2 py-1 border cursor-pointer border-red-500 text-red-500"
+					onClick={onDelete}
+				>
+					Delete
+				</button>
+				<button
+					className="rounded-3xl px-2 py-1 border cursor-pointer"
+					onClick={() => setIsEditing(!isEditing)}
+				>
+					{isEditing ? 'Stop editing' : 'Edit'}
+				</button>
+			</div>
 			{isEditing && (
-				<>
-					<h3>Edit {redirect.short_path}</h3>
-					<RedirectUpdateForm
-						redirect={redirect}
-						setRedirects={setRedirects}
-						setActiveRedirect={setActiveRedirect}
-						setIsEditing={setIsEditing}
-						token={token}
-						notificate={notificate}
-					/>
-				</>
-			)}
-			<h3>Geographical location from accesses</h3>
-			<MapContainer style={{ height: "400px" }} center={[0, 0]} zoom={1} scrollWheelZoom={true}>
-				<TileLayer
-					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+				<RedirectUpdateForm
+					redirect={redirect}
+					setRedirects={setRedirects}
+					setActiveRedirect={setActiveRedirect}
+					setIsEditing={setIsEditing}
+					token={token}
+					notificate={notificate}
 				/>
-				{clickMarkers}
-			</MapContainer>
-		</>
+			)}
+			<div className="flex flex-col gap-1">
+				<p>{redirect.clicks} clicks</p>
+				<div className="flex items-center gap-2">
+					<p>
+						short URL: <a className="underline" href={shortUrl}>{shortUrl}</a>
+					</p>
+					<button
+						className="rounded-3xl px-3 py-0.5 border cursor-pointer"
+						onClick={copyShortUrl}
+					>
+						copy
+					</button>
+				</div>
+				<p>destination URL: <a className="underline" href={redirect.destination_url}>{redirect.destination_url}</a></p>
+			</div>
+			<div>
+				<h3 className="text-2xl mb-1">
+					Geographical location from accesses
+				</h3>
+				<MapContainer style={{ height: "400px" }} center={[0, 0]} zoom={1} scrollWheelZoom={true}>
+					<TileLayer
+						attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+					/>
+					{clickMarkers}
+				</MapContainer>
+			</div>
+		</div>
 	)
 }
 

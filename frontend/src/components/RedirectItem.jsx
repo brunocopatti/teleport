@@ -1,7 +1,10 @@
 import { deleteRedirect, getRedirectById } from "../api/redirects";
 
 function RedirectItem({ redirect, setRedirects, setActiveRedirect, token }) {
-	const onDelete = async () => {
+	const onDelete = async (event) => {
+		// Ensure it won't run onClick
+		event.stopPropagation();
+
 		try {
 			await deleteRedirect({ id: redirect.id }, { token });
 			setRedirects((redirects) => (
@@ -22,11 +25,22 @@ function RedirectItem({ redirect, setRedirects, setActiveRedirect, token }) {
 	}
 	
 	return (
-		<li>
-			<button onClick={onShow}>
-				{redirect.short_path}
-			</button> - <b>{redirect.clicks}</b> clicks
-			<button onClick={onDelete}>Delete</button>
+		<li
+			className="border rounded-md py-3 px-5 flex justify-between items-center"
+			onClick={onShow}
+		>
+			<div className="flex flex-wrap gap-3">
+				<button className="underline cursor-pointer">
+					{redirect.short_path}
+				</button>
+				<span>{redirect.clicks} clicks</span>
+			</div>
+			<button
+				className="border border-red-500 text-red-500 py-1 px-2 rounded-xl lowercase cursor-pointer"
+				onClick={onDelete}
+			>
+				Delete
+			</button>
 		</li>
 	)
 }

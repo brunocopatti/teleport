@@ -12,7 +12,7 @@ const userSchema = z.object({
 		.max(255, "Password must have less than 255 characters")
 });
 
-function LoginForm({ setCredentials, notificate }) {
+function LoginForm({ setCredentials, notificate, setActiveRedirect }) {
 	const {
     register,
     handleSubmit,
@@ -28,39 +28,49 @@ function LoginForm({ setCredentials, notificate }) {
       setValue("username", "");
       setValue("password", "");
       setCredentials(credentials);
+      setActiveRedirect(null);
     } catch (error) {
       notificate({ message: "Error authenticating", type: "error" });
     }
 	};
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
-			<h2>Login</h2>
-			<div>
-        <label>
-          Username:
-          <input
-            {...register("username")}
-            placeholder="Enter your username"
-          />
-        </label>
-        {errors.username && <p>{errors.username.message}</p>}
+		<form
+      className="rounded-3xl border w-full min-w-fit max-w-96 px-4 py-6 flex flex-col gap-6 items-center h-fit"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+			<h3 className="text-3xl">Login</h3>
+			<div className="flex flex-col gap-2">
+        <div>
+          <label>
+            <span className="sr-only">Username</span>
+            <input
+              className="border px-4 py-1 rounded-full w-60"
+              {...register("username")}
+              placeholder="username"
+            />
+          </label>
+          {errors.username && <p>{errors.username.message}</p>}
+        </div>
+  
+        <div>
+          <label>
+            <span className="sr-only">Password</span>
+            <input
+              className="border px-4 py-1 rounded-full w-60"
+              type="password"
+              {...register("password")}
+              placeholder="password"
+            />
+          </label>
+          {errors.password && <p>{errors.password.message}</p>}
+        </div>
       </div>
-
-      <div>
-        <label>
-          Password:
-          <input
-            type="password"
-            {...register("password")}
-            placeholder="Enter your password"
-          />
-        </label>
-        {errors.password && <p>{errors.password.message}</p>}
-      </div>
-
-      <button type="submit">
-        Login
+      <button
+        className="rounded-full px-8 py-2 bg-black text-white text-lg cursor-pointer"
+        type="submit"
+      >
+        Authenticate
       </button>
 		</form>
 	)
