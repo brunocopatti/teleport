@@ -1,6 +1,12 @@
 const notificationColors = {
-    "error": "red",
-    "success": "emerald"
+    "error": {
+        "text": "text-red-700",
+        "border": "border-red-700"
+    },
+    "success": {
+        "text": "text-emerald-700",
+        "border": "border-emerald-700"
+    },
 }
 
 function Notification({ notification }) {
@@ -9,7 +15,7 @@ function Notification({ notification }) {
 
         return (
             <div className="mx-auto max-w-6xl w-full px-3 mb-3">
-                <div className={`text-${color}-700 border-${color}-700 p-3 border rounded-md`}>
+                <div className={`${color["text"]} ${color["border"]} p-3 border rounded-md`}>
                     {notification.message}
                 </div>
             </div>
