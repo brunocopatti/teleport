@@ -41,7 +41,7 @@ function UserCreateForm({ notificate }) {
 
 	return (
 		<form
-      className="rounded-3xl border w-full min-w-fit max-w-96 px-4 py-6 flex flex-col gap-6 items-center h-fit"
+      className="rounded-3xl border w-full min-w-fit max-w-96 px-4 py-6 flex flex-col gap-6 items-center h-fit bg-white"
       onSubmit={handleSubmit(onSubmit)}
       id="register"
       tabIndex={0}
