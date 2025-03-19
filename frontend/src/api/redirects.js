@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = `${import.meta.env.VITE_API_URL}/api/redirects`;
+const baseUrl = `${import.meta.env.VITE_API_URL || ''}/api/redirects`;
 
 export const createRedirect = async ({ shortPath, destinationUrl }, { token }) => {
 	const response = await axios.post(baseUrl, {

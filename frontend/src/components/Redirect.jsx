@@ -9,7 +9,7 @@ const getBaseUrl = () => {
 		return `${import.meta.env.VITE_API_URL}/`
 	}
 	try {
-		return window.location.href;
+		return window.location.href.split('/').slice(0,3).join('/') + '/';
 	} catch {
 		// Browser doesn't support this
 		return "/";
