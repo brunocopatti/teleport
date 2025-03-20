@@ -56,7 +56,7 @@ function App() {
 							Logout
 						</button>
 					)}
-					<button onClick={toggleTheme}>
+					<button className="cursor-pointer" onClick={toggleTheme}>
 						{theme === "dark" ? <Sun /> : <Moon />}
 					</button>
 				</div>
