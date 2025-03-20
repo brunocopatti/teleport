@@ -95,6 +95,7 @@ function RedirectUpdateForm({
             <span className="sr-only">Destination URL</span>
             <FormInput
               {...register("destinationUrl")}
+			  type="url"
               placeholder="destination url"
 							disabled={isLoading}
             />
