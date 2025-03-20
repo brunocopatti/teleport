@@ -15,7 +15,7 @@ function Notification({ notification }) {
 
         return (
             <div className="bg-white dark:bg-gray-900 mx-auto max-w-6xl w-full mb-3 sticky top-5">
-                <div className={`${color["text"]} ${color["border"]} p-3 border rounded-md`}>
+                <div className={`${color["text"]} ${color["border"]} mx-3 p-3 border rounded-md`}>
                     {notification.message}
                 </div>
             </div>
