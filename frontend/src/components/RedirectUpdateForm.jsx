@@ -9,7 +9,8 @@ import FormError from "./FormError";
 const redirectSchema = z.object({
 	shortPath: z.string()
 		.min(1, "Must not be empty")
-		.max(20, "Must have less than 20 characters"),
+		.max(20, "Must have less than 20 characters")
+		.regex(/^[a-z0-9]+$/, "Must be alphanumeric"),
 	destinationUrl: z.string()
 		.url({
 			message: "Must be a full URL"
