@@ -44,13 +44,13 @@ function App() {
 	}
 
 	return (
-		<div className="min-h-screen flex flex-col">
+		<div className="min-h-screen flex flex-col dark:bg-gray-900 dark:text-white">
 			<nav className="flex justify-between items-center mx-auto max-w-6xl w-full px-3 py-5">
 				<h1 className="text-2xl">teleport</h1>
 				<div className="flex items-center gap-3">
 					{credentials && (
 						<button
-							className="lowercase px-3 py-0.5 border rounded-xl border-red-500 text-red-500 cursor-pointer"
+							className="lowercase px-3 py-0.5 border rounded-xl border-red-500 text-red-500 dark:border-red-400 dark:text-red-400 cursor-pointer"
 							onClick={onLogout}
 						>
 							Logout
@@ -68,7 +68,7 @@ function App() {
 						<h2 className="text-2xl text-center lg:text-3xl lg:text-start">Shorten your URL for FREE!</h2>
 						<p className="text-xl text-center lg:text-2xl lg:text-start">And get reports about it.</p>
 					</div>
-					<a className="bg-black text-white px-7 py-3 rounded-full" href="#register">Start now</a>
+					<a className="bg-black text-white dark:bg-gray-600 px-7 py-3 rounded-full" href="#register">Start now</a>
 				</header>
 			)}
 			<div className="flex-1">

@@ -121,7 +121,7 @@ function Redirect({
 					<RefreshCw />
 				</button>
 				<button
-					className="rounded-3xl px-2 py-1 border cursor-pointer border-red-500 text-red-500 disabled:opacity-50 disabled:cursor-auto"
+					className="rounded-3xl px-2 py-1 border cursor-pointer border-red-500 text-red-500 dark:border-red-400 dark:text-red-400 disabled:opacity-50 disabled:cursor-auto"
 					onClick={onDelete}
 					disabled={isLoading}
 				>

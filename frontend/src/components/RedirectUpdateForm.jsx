@@ -1,8 +1,10 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { getRedirectById, updateRedirect } from "../api/redirects";
+import FormButton from "./FormButton";
+import FormInput from "./FormInput";
+import FormError from "./FormError";
 
 const redirectSchema = z.object({
 	shortPath: z.string()
@@ -79,36 +81,33 @@ function RedirectUpdateForm({
         <div>
           <label>
             <span className="sr-only">Short path</span>
-            <input
-              className="border px-4 py-1 rounded-full w-60 disabled:opacity-50"
+            <FormInput
               {...register("shortPath")}
             	placeholder="short path"
 							disabled={isLoading}
             />
           </label>
-          {errors.shortPath && <p className="text-red-700">{errors.shortPath.message}</p>}
+          {errors.shortPath && <FormError>{errors.shortPath.message}</FormError>}
         </div>
   
         <div>
           <label>
             <span className="sr-only">Destination URL</span>
-            <input
-              className="border px-4 py-1 rounded-full w-60 disabled:opacity-50"
+            <FormInput
               {...register("destinationUrl")}
               placeholder="destination url"
 							disabled={isLoading}
             />
           </label>
-          {errors.destinationUrl && <p className="text-red-700">{errors.destinationUrl.message}</p>}
+          {errors.destinationUrl && <FormError>{errors.destinationUrl.message}</FormError>}
         </div>
       </div>
-      <button
-        className="rounded-full px-8 py-2 bg-black text-white text-lg cursor-pointer disabled:opacity-50 disabled:cursor-auto"
+      <FormButton
         type="submit"
 				disabled={isLoading}
       >
         Update
-      </button>
+      </FormButton>
 		</form>
 	);
 }

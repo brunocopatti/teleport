@@ -3,6 +3,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { createUser } from "../api/users";
+import FormButton from "./FormButton";
+import FormInput from "./FormInput";
+import FormError from "./FormError";
 
 const userSchema = z.object({
 	username: z.string()
@@ -47,7 +50,7 @@ function UserCreateForm({ notificate }) {
 
 	return (
 		<form
-      className="rounded-3xl border w-full min-w-fit max-w-96 px-4 py-6 flex flex-col gap-6 items-center h-fit bg-white"
+      className="rounded-3xl border w-full min-w-fit max-w-96 px-4 py-6 flex flex-col gap-6 items-center h-fit bg-white dark:bg-gray-800"
       onSubmit={handleSubmit(onSubmit)}
       id="register"
       tabIndex={0}
@@ -57,37 +60,34 @@ function UserCreateForm({ notificate }) {
         <div>
           <label>
             <span className="sr-only">Username</span>
-            <input
-              className="border px-4 py-1 rounded-full w-60 disabled:opacity-50"
+            <FormInput
               {...register("username")}
               placeholder="username"
               disabled={isLoading}
             />
           </label>
-          {errors.username && <p className="text-red-700">{errors.username.message}</p>}
+          {errors.username && <FormError>{errors.username.message}</FormError>}
         </div>
   
         <div>
           <label>
             <span className="sr-only">Password</span>
-            <input
-              className="border px-4 py-1 rounded-full w-60 disabled:opacity-50"
+            <FormInput
               type="password"
               {...register("password")}
               placeholder="password"
               disabled={isLoading}
             />
           </label>
-          {errors.password && <p className="text-red-700">{errors.password.message}</p>}
+          {errors.password && <FormError>{errors.password.message}</FormError>}
         </div>
       </div>
-      <button
-        className="rounded-full px-8 py-2 bg-black text-white text-lg cursor-pointer disabled:opacity-50 disabled:cursor-auto"
+      <FormButton
         type="submit"
         disabled={isLoading}
       >
         Create account
-      </button>
+      </FormButton>
 		</form>
 	)
 }

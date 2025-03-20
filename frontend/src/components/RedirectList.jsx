@@ -24,7 +24,7 @@ function RedirectList({ redirects, setRedirects, setActiveRedirect, token, notif
 		<div className="flex flex-col gap-3">
 			<h4 className="text-4xl">Redirects</h4>
 			<button
-				className="w-fit rounded-full py-2 px-8 bg-black text-white cursor-pointer disabled:opacity-50 disabled:cursor-auto"
+				className="w-fit rounded-full py-2 px-8 bg-black dark:bg-gray-600 text-white cursor-pointer disabled:opacity-50 disabled:cursor-auto"
 				onClick={onRefresh}
 				disabled={isLoading}
 			>

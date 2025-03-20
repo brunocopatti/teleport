@@ -37,7 +37,7 @@ function RedirectItem({ redirect, setRedirects, setActiveRedirect, token, isLoad
 	
 	return (
 		<li
-			className={`border rounded-md py-3 px-5 flex justify-between items-center ${isLoading && "opacity-50"}`}
+			className={`border rounded-md py-3 px-5 flex justify-between items-center ${isLoading ? "opacity-50" : ""}`}
 			onClick={onShow}
 		>
 			<div className="flex flex-wrap gap-3">
@@ -47,7 +47,7 @@ function RedirectItem({ redirect, setRedirects, setActiveRedirect, token, isLoad
 				<span>{redirect.clicks} clicks</span>
 			</div>
 			<button
-				className="border border-red-500 text-red-500 py-1 px-2 rounded-xl lowercase cursor-pointer disabled:cursor-auto"
+				className="border border-red-500 text-red-500 dark:border-red-400 dark:text-red-400 py-1 px-2 rounded-xl lowercase cursor-pointer disabled:cursor-auto"
 				onClick={onDelete}
 				disabled={isLoading}
 			>

@@ -2,7 +2,7 @@
 
 ## To do
 
-- [ ] Dark mode
+- [x] Dark mode
 - [x] Icons
 - [x] Loading states
 - [ ] SEO
