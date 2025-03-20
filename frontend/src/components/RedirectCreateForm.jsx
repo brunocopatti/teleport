@@ -49,7 +49,7 @@ function RedirectCreateForm({ token, setRedirects, notificate }) {
         return;
       }
       notificate({
-				message: "Error updating Redirect",
+				message: "Error creating Redirect",
 				type: "error"
 			});
     } finally {
