@@ -2,7 +2,7 @@ import { useState } from "react";
 import Notification from "./components/Notification";
 import useNotification from "./hooks/useNotification";
 import Main from "./components/Main";
-import { Github, Linkedin } from "lucide-react";
+import { Github, Linkedin, Moon, Sun } from "lucide-react";
 
 const socials = [
 	{
@@ -23,7 +23,21 @@ const socials = [
 
 function App() {
 	const [credentials, setCredentials] = useState(null);
+	const [theme, setTheme] = useState(
+		document.documentElement.classList.contains("dark") ? "dark" : "light"
+	);
 	const { notification, notificate } = useNotification();
+
+	const toggleTheme = () => {
+		document.documentElement.classList.toggle("dark");
+		if (document.documentElement.classList.contains("dark")) {
+			localStorage.theme = "dark";
+			setTheme("dark");
+		} else {
+			localStorage.theme = "light";
+			setTheme("light");
+		}
+	}
 
 	const onLogout = () => {
 		setCredentials(null);
@@ -42,6 +56,9 @@ function App() {
 							Logout
 						</button>
 					)}
+					<button onClick={toggleTheme}>
+						{theme === "dark" ? <Sun /> : <Moon />}
+					</button>
 				</div>
 			</nav>
 			<Notification notification={notification} />
