@@ -10,6 +10,8 @@ const usersRouter = require("./routers/users");
 const authRouter = require("./routers/auth");
 const { validateInput } = require("./middleware/validator");
 
+const PORT = process.env.PORT || 3000;
+
 const app = express();
 
 app.set('trust proxy', true);
@@ -53,6 +55,6 @@ app.use("/api/redirects", redirectsRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 
-app.listen(3000, () => {
-	console.log("http://localhost:3000");
+app.listen(PORT, () => {
+	console.log(`http://localhost:${PORT}`);
 });
