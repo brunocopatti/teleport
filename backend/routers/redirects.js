@@ -110,8 +110,7 @@ redirectsRouter.put(
 	validateInput,
 	async (req, res, next) => {
 		try {
-			const { redirectId } = matchedData(req);
-			const { shortPath, destinationUrl } = req.body;
+			const { redirectId, shortPath, destinationUrl } = matchedData(req);
 			const [updateResults] = await pool.execute(
 				`UPDATE redirects
 				SET short_path = ?,
