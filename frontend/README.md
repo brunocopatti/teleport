@@ -1,15 +1,20 @@
 # Front-end
 
-## To do
+## Requirements
 
-- [x] Dark mode
-- [x] Icons
-- [x] Loading states
-- [ ] SEO
-- [ ] Keep jwt at browser
+- [Node.js](https://nodejs.org/)
 
-## Required environment variables
+## Installation
+
+Run `npm install` to install every dependency.
+
+### Environment variables
 
 Add the following variables to your `.env` file:
 
-- `VITE_API_URL`: Should be empty if frontend is being served by same server as backend.
+- `VITE_API_URL`: If frontend is being served by same server as backend it should be empty, otherwise it should be the backend URL (without trailing slash).
+
+## To do
+
+- [ ] SEO
+- [ ] Store session JWT

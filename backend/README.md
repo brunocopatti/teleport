@@ -7,7 +7,7 @@
 
 ## Installation
 
-Ensure you install every dependency by running `npm install`.
+Run `npm install` to install every dependency.
 
 ### Database
 
@@ -30,6 +30,10 @@ Add the following variables to your `.env` file:
 - `DB_PASSWORD`
 - `DB_NAME`
 - `IPINFO_TOKEN`: API token from [IPinfo](https://ipinfo.io/).
+
+### Building the frontend
+
+Run `npm run build` to compile the frontend.
 
 ## Running the application
 
