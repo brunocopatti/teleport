@@ -35,6 +35,10 @@ Add the following variables to your `.env` file:
 
 Run `npm run build` to compile the frontend.
 
+## Development
+
+Run `npm run dev` to start a local development version of the application.
+
 ## Running the application
 
 To start the application run `npm run start`.
